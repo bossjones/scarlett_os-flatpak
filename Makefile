@@ -182,7 +182,11 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	$(IMAGE_TAG_TEST)
 
 # run test
-	docker exec -i -t --privileged -u developer -w /home/developer $(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
+	docker exec -i -t \
+	--privileged \
+	-u developer \
+	-w /home/developer \
+	$(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
 
 # FIX: placeholder
 travis: build-two-phase
