@@ -141,3 +141,5 @@ run-flatpak-builder-debug-base:
 # [developer@gnometop scarlett_os-flatpak]$
 
 run-flatpak-builder-uninstall-base: run-flatpak-builder-debug-base
+
+base-rebuild: step1 step2 step3 step4
