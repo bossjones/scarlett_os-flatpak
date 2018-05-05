@@ -60,14 +60,20 @@ install-flatpak-system-deps:
 
 run-build:
 	flatpak-builder --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
+	flatpak-builder -v --user --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
 # display contents of dictonary dir
 
-
+# flatpak-remote-add — Add a remote repository
+# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-remote-add
+# flatpak remote-add [OPTION...] [--from] NAME LOCATION
 add-new-repository:
 	flatpak -v --user remote-add --no-gpg-verify --if-not-exists scarlett_os-base-repo scarlett_os-base-repo
 # display contants of scarlett_os-base-repo dir
 	tree scarlett_os-base-repo
 
+# flatpak-install — Install an application or runtime
+# flatpak install [OPTION...] REMOTE-NAME REF...
+# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-install
 install-the-app:
 	flatpak -v --user install scarlett_os-base-repo org.scarlett.ScarlettOSBase
 
