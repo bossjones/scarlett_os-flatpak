@@ -68,6 +68,25 @@ build-two-phase: build
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(username)/$(container_name):latest
 
+#################################################################
+
+build-two-phase-force: build-force
+	time docker run \
+	--privileged \
+	-i \
+	-e TRACE=1 \
+	--cap-add=ALL \
+	--tty \
+	--name $(CONTAINER_NAME) \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
+	--entrypoint "bash" \
+	$(IMAGE_TAG) \
+	/home/developer/.ci/flatpak-bootstrap.sh
+
+# Commit backend Container
+	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
+	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(username)/$(container_name):latest
+
 # Commit backend Container
 build-commit:
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
@@ -97,6 +116,8 @@ push-local:
 build-push-local: build-local tag-local push-local
 
 build-push-two-phase: build-two-phase tag push
+
+build-push-two-phase-force: build-two-phase-force tag push
 
 tag:
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
