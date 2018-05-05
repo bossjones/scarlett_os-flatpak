@@ -1,3 +1,5 @@
+.PHONY: add-new-repository all bootstrap-runtime-system bootstrap-runtime-user build build-commit build-force build-local build-push build-push-local build-push-two-phase build-push-two-phase-force build-two-phase build-two-phase-force check-app-installed delet-remotes delete-remotes docker-shell full-setup-base install-flatpak-system-deps install-gnome-2.6-runtime install-gpg-keys install-runtime install-runtime-system install-runtime-user install-the-app list push push-force push-local rebuild-base remote-add remote-add-system remote-add-user run-app run-build run-flatpak-builder-base-bash run-flatpak-builder-debug-base run-flatpak-builder-uninstall-base run-flatpak-debug-base step1 step2 step3 step4 step5 tag tag-local travis
+
 SHELL := $(shell which bash)
 
 DIR   := $(shell basename $$PWD)
