@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# SOURCE: https://github.com/ghjnut/docker-steamcmd/blob/2f409cbd7e841b2f910c34c26df10f81fa9d408f/bin/build_auth
+[[ "$TRACE" ]] && set -x
+
+# grab sudo priviledges so we do not need to interrupt the following process if they are needed
+# SOURCE: https://github.com/niccokunzmann/cp-docker-development/blob/212363005e107525bdbb9780508ec0d1b11b0f6c/docker/ubuntu/build/run_all.sh
+sudo true
+
+# install-gpg-keys:
+curl -L 'https://sdk.gnome.org/keys/gnome-sdk.gpg' > /home/developer/gnome-sdk.gpg
+curl -L 'https://sdk.gnome.org/keys/gnome-sdk-autobuilder.gpg' > /home/developer/gnome-sdk-autobuilder.gpg
+
+# Add remotes
+flatpak --user remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --user remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
+
+# install gnome under user space
+flatpak --user install gnome org.gnome.Platform//3.22 || true
+flatpak --user install gnome org.gnome.Sdk//3.22 || true
+flatpak --user install gnome org.gnome.Platform//3.24 || true
+flatpak --user install gnome org.gnome.Sdk//3.24 || true
+flatpak --user install gnome org.gnome.Platform//3.26 || true
+flatpak --user install gnome org.gnome.Sdk//3.26 || true
+# install freedesktop stuff under user space
+flatpak --user install gnome org.freedesktop.Sdk//1.4 || true
+flatpak --user install gnome org.freedesktop.Platform//1.4 || true
+flatpak --user install gnome org.freedesktop.Sdk//1.6 || true
+flatpak --user install gnome org.freedesktop.Platform//1.6 || true
+flatpak remotes
+flatpak --user remote-list --show-details
+flatpak --user list --runtime --show-details
