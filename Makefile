@@ -159,11 +159,27 @@ docker-run-systemd-test:
 	--cap-add=ALL \
 	-d \
 	--tty \
-	--name $(CONTAINER_NAME) \
-	-v $(PWD):/home/$(NON_ROOT_USER) \
-	--entrypoint "bash" \
-	$(IMAGE_TAG) \
-	/home/developer/.ci/flatpak-bootstrap.sh
+	--name $(CONTAINER_NAME_TEST)
+
+# run test
+	docker exec -i -t \
+	--privileged \
+	-u developer \
+	-w /home/developer \
+	$(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
+
+docker-run-systemd-test-force: docker-build-systemd-test-force
+	time docker run \
+	--privileged \
+	-i \
+	-e TRACE=1 \
+	--cap-add=ALL \
+	-d \
+	--tty \
+	--name $(CONTAINER_NAME_TEST)
+
+# run test
+	docker exec -i -t --privileged -u developer -w /home/developer $(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
 
 # FIX: placeholder
 travis: build-two-phase
