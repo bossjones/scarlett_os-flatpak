@@ -1,4 +1,6 @@
-FROM fedora:28
+FROM scarlettos/scarlett_os-flatpak:latest
+
+USER root
 
 RUN dnf -y update && \
     dnf -y install systemd && \
@@ -14,4 +16,5 @@ RUN dnf -y update && \
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 VOLUME [ "/sys/fs/cgroup", "/tmp", "/run" ]
+
 CMD ["/usr/sbin/init"]
