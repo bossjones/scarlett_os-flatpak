@@ -230,5 +230,7 @@ run-flatpak-builder-debug-base:
 
 run-flatpak-builder-uninstall-base: run-flatpak-builder-debug-base
 
+run-flatpak-builder-base-bash: run-flatpak-builder-debug-base
+
 rebuild-base: step1 step2 step3 step4
 ############################################[Flatpak - END]##################################################
