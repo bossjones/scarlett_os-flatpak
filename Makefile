@@ -164,8 +164,9 @@ docker-run-systemd-test:
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-d \
 	--tty \
+	--entrypoint "/usr/sbin/init" \
 	--name $(CONTAINER_NAME_TEST) \
-	$(IMAGE_TAG_TEST)
+	$(IMAGE_TAG_TEST) true
 
 # run test
 	docker exec -i -t \
@@ -186,8 +187,9 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-d \
 	--tty \
+	--entrypoint "/usr/sbin/init" \
 	--name $(CONTAINER_NAME_TEST) \
-	$(IMAGE_TAG_TEST)
+	$(IMAGE_TAG_TEST) true
 
 # run test
 	docker exec -i -t \
