@@ -158,6 +158,10 @@ docker-run-systemd-test:
 	-i \
 	-e TRACE=1 \
 	--cap-add=ALL \
+	--security-opt seccomp=unconfined \
+	--tmpfs /run \
+	--tmpfs /run/lock \
+	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-d \
 	--tty \
 	--name $(CONTAINER_NAME_TEST) \
@@ -176,6 +180,10 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	-i \
 	-e TRACE=1 \
 	--cap-add=ALL \
+	--security-opt seccomp=unconfined \
+	--tmpfs /run \
+	--tmpfs /run/lock \
+	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-d \
 	--tty \
 	--name $(CONTAINER_NAME_TEST) \
