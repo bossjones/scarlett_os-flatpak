@@ -14,7 +14,9 @@ ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
-RUN dnf -y update && \
+RUN set -xv ; \
+    ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
+    dnf -y update && \
     dnf -y reinstall "*" \
     dnf -y remove vim-minimal && \
     dnf -y install \
