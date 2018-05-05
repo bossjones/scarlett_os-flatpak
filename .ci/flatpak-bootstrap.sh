@@ -4,4 +4,8 @@
 [[ "$TRACE" ]] && set -x
 
 cd ..
+
+# ---------------------------------------------
+# Install Flatpak Remotes And Runtimes
+# ---------------------------------------------
 make bootstrap-runtime-user
