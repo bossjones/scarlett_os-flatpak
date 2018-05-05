@@ -162,6 +162,7 @@ docker-run-systemd-test:
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
@@ -171,9 +172,9 @@ docker-run-systemd-test:
 # run test
 	docker exec -i -t \
 	--privileged \
-	-u developer \
-	-w /home/developer \
-	$(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
+	-u $(NON_ROOT_USER) \
+	-w /home/$(NON_ROOT_USER) \
+	$(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
 	time docker run \
@@ -185,6 +186,7 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
@@ -194,9 +196,9 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 # run test
 	docker exec -i -t \
 	--privileged \
-	-u developer \
-	-w /home/developer \
-	$(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
+	-u $(NON_ROOT_USER) \
+	-w /home/$(NON_ROOT_USER) \
+	$(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
 
 # FIX: placeholder
 travis: build-two-phase
