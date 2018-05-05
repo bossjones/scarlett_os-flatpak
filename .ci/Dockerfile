@@ -257,10 +257,15 @@ RUN set -xv ; \
         dnf install compat-openssl10-devel -y && \
         dnf clean all
 
-RUN pip3 install --no-cache-dir --upgrade \
+RUN pip3 install --upgrade pip \
+        && \
+    pip3 install \
+                --no-cache-dir \
+                --upgrade \
                 --ignore-installed \
                 --force-reinstall \
-                pip setuptools wheel && \
+                setuptools wheel \
+            && \
     pip3 install meson
 
 RUN set -xe \
