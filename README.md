@@ -14,3 +14,8 @@ Experimental repo to install scarlett via flatpak
                     "V": "1"
                 }, */
 ```
+
+
+# Good example of installing cpython w/ flatpak and its deps
+
+https://github.com/flathub/org.jamovi.jamovi/blob/master/python-deps.json

@@ -1,0 +1,59 @@
+{
+    "name": "python3-cython",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=/app cython PyYAML six pylint ipython gnureadline pdbpp ruamel.yaml ruamel.yaml.cmd"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz",
+            "sha512": "e16d8b7f4f026b6a95b11fb59c54ec5f114f6f516294eaa95e718abdf5d37c17a9c4b5e0a0a61fca04e801792d9b7fb801087cf849ff22b9581f6af204b1883a"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/79/9d/dea8c5181cdb77d32e20a44dd5346b0e4bac23c4858f2f66ad64bbcf4de8/Cython-0.28.2.tar.gz",
+            "sha512": "7d09d1fdc10f96eb6121657b71e059c38c479b4ca180965a8e5adb89ac0f9be50260ea46197c45e8ddc7c1339b9b88c140dac2c4a7a49e1943fb4bf24a73d082"
+        },
+        {
+            "type": "file",
+            "url": "https: //files.pythonhosted.org/packages/fb/b0/57e6caa91c7304f3e3a39d0d1ab234d9118b2ca203b182bb6b1ade1f8805/pylint-1.8.4.tar.gz",
+            "sha256": "34738a82ab33cbd3bb6cd4cef823dbcabdd2b6b48a4e3a3054a2bbbf0c712be9"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/4f/a7/fc647e9ce711cd630873c37219c0bd4438b8171211d813c7e6b316811e02/ipython-6.3.1.tar.gz",
+            "sha256": "a6ac981381b3f5f604b37a293369963485200e3639fb0404fa76092383c10c41"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/50/64/86085c823cd78f9df9d8e33dce0baa71618016f8860460b82cf6610e1eb3/gnureadline-6.3.8.tar.gz",
+            "sha256": "58e208ed34a53456ecf58bc11eacbe332c50d322b329457e2c645bd15192b035"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/e6/cc/8bf81f5e53daa4a90d696fa430c2f4e709656e2bf953686bd15c0746616f/pdbpp-0.9.2.tar.gz",
+            "sha256": "dde77326e4ea41439c243ed065826d53539530eeabd1b6615aae15cfbb9fda05"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz",
+            "sha256": "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/16/d8/bc6316cf98419719bd59c91742194c111b6f2e85abac88e496adefaf7afe/six-1.11.0.tar.gz",
+            "sha256": "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c1/ad/9557a78f1b61951623c56225e05dacdd81f80519f13fc39a926a5793edfa/ruamel.yaml-0.15.37.tar.gz",
+            "sha256": "509842d96fb194f79b57483b76429f8956d8f7ade3cb49d1e5aeb5c5e9ef4918"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/44/dd/c23f94e56ec24083e3ceba3fa319a2ef394fe86e8901b1c504eb6f3fe76b/ruamel.yaml.cmd-0.4.2.tar.gz",
+            "sha256": "280dc13761f29b1340efca99cb17a7ff0d0ab24298f356b535b40603ab226a18"
+        }
+    ]
+}
