@@ -59,9 +59,10 @@ build-two-phase: build
 	--cap-add=ALL \
 	--tty \
 	--name $(CONTAINER_NAME) \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
 	--entrypoint "bash" \
 	$(IMAGE_TAG) \
-	/app/bin/flatpak-bootstrap.sh
+	/home/developer/.ci/flatpak-bootstrap.sh
 
 # Commit backend Container
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
@@ -72,17 +73,17 @@ build-commit:
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
 
 build:
-	docker build --tag $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-force:
-	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-local:
-	docker build --tag $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
 
 tag-local:
@@ -122,42 +123,63 @@ travis:
 ############################################[Docker CI - END]##################################################
 
 ############################################[Flatpak - BEGIN]##################################################
-remote-add:
+
+remote-add-user:
 	flatpak remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
+
+remote-add-system:
 	flatpak --user remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak --user remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
 
-install-runtime:
-	# Install the freedesktop 1.4 platform and SDK (runtime for building the app)
-	# flatpak remote-add --if-not-exists gnome http://sdk.gnome.org/repo/
-	wget -P /home/developer https://sdk.gnome.org/keys/gnome-sdk.gpg
-	wget -P /home/developer https://sdk.gnome.org/keys/gnome-sdk-autobuilder.gpg
+# Setup for both system and for user
+remote-add: remote-add-user remote-add-system
+
+bootstrap-runtime-user: remote-add-user install-runtime-user
+
+bootstrap-runtime-system: remote-add-system remote-add-system
+
+install-runtime-user:
 # install gnome under user space
 	flatpak --user install gnome org.gnome.Platform//3.22 || true
 	flatpak --user install gnome org.gnome.Sdk//3.22 || true
 	flatpak --user install gnome org.gnome.Platform//3.24 || true
 	flatpak --user install gnome org.gnome.Sdk//3.24 || true
-# install gnome globally
-	flatpak install gnome org.gnome.Platform//3.22 || true
-	flatpak install gnome org.gnome.Sdk//3.22 || true
-	flatpak install gnome org.gnome.Platform//3.24 || true
-	flatpak install gnome org.gnome.Sdk//3.24 || true
+	flatpak --user install gnome org.gnome.Platform//3.26 || true
+	flatpak --user install gnome org.gnome.Sdk//3.26 || true
 # install freedesktop stuff under user space
 	flatpak --user install gnome org.freedesktop.Sdk//1.4 || true
 	flatpak --user install gnome org.freedesktop.Platform//1.4 || true
 	flatpak --user install gnome org.freedesktop.Sdk//1.6 || true
 	flatpak --user install gnome org.freedesktop.Platform//1.6 || true
+	flatpak remotes
+	flatpak --user remote-list --show-details
+	flatpak --user list --runtime --show-details
+
+install-runtime-system:
+# install gnome globally
+	flatpak install gnome org.gnome.Platform//3.22 || true
+	flatpak install gnome org.gnome.Sdk//3.22 || true
+	flatpak install gnome org.gnome.Platform//3.24 || true
+	flatpak install gnome org.gnome.Sdk//3.24 || true
+	flatpak install gnome org.gnome.Platform//3.26 || true
+	flatpak install gnome org.gnome.Sdk//3.26 || true
 # install freedesktop stuff globaly
 	flatpak install gnome org.freedesktop.Sdk//1.4 || true
 	flatpak install gnome org.freedesktop.Platform//1.4 || true
 	flatpak install gnome org.freedesktop.Sdk//1.6 || true
 	flatpak install gnome org.freedesktop.Platform//1.6 || true
 	flatpak remotes
-	flatpak --user remote-list --show-details
-	flatpak --user list --runtime --show-details
 	flatpak remote-list --show-details
 	flatpak list --runtime --show-details
+
+install-gpg-keys:
+	# Install the freedesktop 1.4 platform and SDK (runtime for building the app)
+	# flatpak remote-add --if-not-exists gnome http://sdk.gnome.org/repo/
+	curl -L 'https://sdk.gnome.org/keys/gnome-sdk.gpg' > /home/developer/gnome-sdk.gpg
+	curl -L 'https://sdk.gnome.org/keys/gnome-sdk-autobuilder.gpg' > /home/developer/gnome-sdk-autobuilder.gpg
+
+install-runtime: install-runtime-user install-runtime-system
 
 install-gnome-2.6-runtime:
 	flatpak --user install gnome org.gnome.Platform//3.26 || true
