@@ -67,16 +67,6 @@
                 "cflags": "-O0 -g",
                 /* This is set in the environment variable CXXFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
                 "cxxflags": "-O0 -g",
-                /* "env": {
-                    "GST_PLUGIN_SYSTEM_PATH": "/app/lib/gstreamer-1.0/",
-                    "FREI0R_PATH": "/app/lib/frei0r-1/",
-                    "GSTREAMER": "1.0",
-                    "ENABLE_PYTHON3": "yes",
-                    "ENABLE_GTK": "yes",
-                    "PYTHON_VERSION": "3.5",
-                    "CC": "gcc",
-                    "V": "1"
-                }, */
                 /* If this is true (the default is false) then all ELF files will be stripped after install. */
                 "strip": false,
                 /* By default (if strip is not true) flatpak-builder extracts all debug info in ELF files to a separate files and puts this in an extension. If you want to disable this, set no-debuginfo to true. */
