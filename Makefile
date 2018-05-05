@@ -78,11 +78,9 @@ install-the-app:
 	flatpak -v --user install scarlett_os-base-repo org.scarlett.ScarlettOSBase
 
 check-app-installed:
-	echo -e "\n"
+	@echo -e "\n"
 	flatpak info org.scarlett.ScarlettOSBase
-	echo -e "\n"
-	flatpak info org.scarlett.ScarlettOSBase.Locale
-	echo -e "\n"
+	@echo -e "\n"
 
 run-app:
 	flatpak run org.scarlett.ScarlettOSBase
@@ -97,3 +95,11 @@ step5: run-app
 
 # If you want to do everything in one step, do this
 full-setup-base: install-flatpak-system-deps delet-remotes remote-add install-runtime install-gnome-2.6-runtime step1 step2 step3 step4 step5
+
+# Debug successfully built flatpak
+run-flatpak-debug-base:
+	flatpak run -d --command=sh org.scarlett.ScarlettOSBase
+
+# Debug failing flatpak-build
+run-flatpak-builder-debug-base:
+	flatpak-builder --run appdir org.my.Manifest.json sh
