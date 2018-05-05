@@ -48,16 +48,21 @@
                 "/app/bin/python3 -m pip install --no-cache-dir --upgrade --ignore-installed --force-reinstall pip setuptools==36.0.1 wheel==0.29.0"
             ],
             "build-options": {
+                /* This is an array containing extra options to pass to flatpak build. */
                 "build-args": [
                     "--share=network",
-                    "--allow=devel"
+                    "--allow=devel",
+                    "--filesystem=home"
                 ],
+                /* This is an array containing extra options to pass to configure. */
                 "config-opts": [
                     "--enable-loadable-sqlite-extensions",
                     "--enable-shared",
                     "--with-pydebug"
                 ],
+                /* This is set in the environment variable CFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
                 "cflags": "-O0 -g",
+                /* This is set in the environment variable CXXFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
                 "cxxflags": "-O0 -g",
                 "env": {
                     "GST_PLUGIN_SYSTEM_PATH": "/app/lib/gstreamer-1.0/",
@@ -69,7 +74,9 @@
                     "CC": "gcc",
                     "V": "1"
                 },
+                /* If this is true (the default is false) then all ELF files will be stripped after install. */
                 "strip": false,
+                /* By default (if strip is not true) flatpak-builder extracts all debug info in ELF files to a separate files and puts this in an extension. If you want to disable this, set no-debuginfo to true. */
                 "no-debuginfo": false
             },
             "sources": [
