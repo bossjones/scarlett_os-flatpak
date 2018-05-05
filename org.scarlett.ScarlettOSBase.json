@@ -56,7 +56,6 @@
                 "build-args": [
                     "--share=network",
                     "--allow=devel",
-                    /* per-user applications are in $HOME/.local/share/flatpak/app/ */
                     "--filesystem=home"
                 ],
                 /* This is an array containing extra options to pass to configure. */
