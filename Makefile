@@ -90,4 +90,4 @@ step4: check-app-installed
 step5: run-app
 
 # If you want to do everything in one step, do this
-full-setup: install-flatpak-system-deps delet-remotes remote-add install-runtime install-gnome-2.6-runtime step1 step2 step3 step4 step5
+full-setup-base: install-flatpak-system-deps delet-remotes remote-add install-runtime install-gnome-2.6-runtime step1 step2 step3 step4 step5
