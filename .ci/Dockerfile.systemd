@@ -21,4 +21,4 @@ VOLUME [ "/sys/fs/cgroup", "/tmp", "/run" ]
 
 CMD ["/usr/lib/systemd/systemd"]
 
-CMD ["/usr/sbin/init"]
+# CMD ["/usr/sbin/init"]
