@@ -43,6 +43,10 @@
     "modules": [
         {
             "name": "cpython",
+            "post-install": [
+                /* These are needed for the triggers */
+                "/app/bin/python3 -m pip install --upgrade --ignore-installed pip setuptools==36.0.1 wheel==0.29.0"
+            ],
             "sources": [
                 {
                     "type": "archive",
