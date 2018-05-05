@@ -29,6 +29,7 @@ VERSION       = latest
 NON_ROOT_USER = developer
 
 IMAGE_TAG      := $(username)/$(container_name):$(GIT_SHA)
+IMAGE_TAG_TEST := $(username)/$(container_name)-systemd:$(GIT_SHA)
 CONTAINER_NAME := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
 CONTAINER_NAME_TEST := $(shell echo -n $(username)/$(container_name)-systemd:$(GIT_SHA) | openssl dgst -sha1 | sed 's/^.* //'  )
 
@@ -159,7 +160,8 @@ docker-run-systemd-test:
 	--cap-add=ALL \
 	-d \
 	--tty \
-	--name $(CONTAINER_NAME_TEST)
+	--name $(CONTAINER_NAME_TEST) \
+	$(IMAGE_TAG_TEST)
 
 # run test
 	docker exec -i -t \
@@ -176,7 +178,8 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--cap-add=ALL \
 	-d \
 	--tty \
-	--name $(CONTAINER_NAME_TEST)
+	--name $(CONTAINER_NAME_TEST) \
+	$(IMAGE_TAG_TEST)
 
 # run test
 	docker exec -i -t --privileged -u developer -w /home/developer $(CONTAINER_NAME_TEST) /home/developer/.ci/ci-entrypoint.sh
