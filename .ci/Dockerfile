@@ -82,7 +82,10 @@ RUN dnf -y install \
     xorg-x11-server-Xvfb \
   && \
     dnf install flatpak flatpak-builder wget git bzip2 elfutils make ostree -y && \
-    dnf -y install \
+    dnf -y update && \
+        dnf -y reinstall "*" \
+        dnf -y remove vim-minimal && \
+        dnf -y install \
         abrt \
         bash-completion \
         bc \
@@ -94,7 +97,176 @@ RUN dnf -y install \
     dnf install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel xz xz-devel && \
     dnf install -y @development-tools && \
     dnf reinstall -y glibc-devel.x86_64 && \
-    dnf clean all
+    dnf install python3-devel python3-pyOpenSSL.noarch python2-pyOpenSSL.noarch -y; \
+    dnf group install "C Development Tools and Libraries" -y; \
+    dnf install -y \
+        wget \
+        curl \
+        vim \
+        glibc-langpack-en.x86_64 \
+        redhat-rpm-config \
+        htop \
+        perf \
+        net-tools \
+        file \
+        atop \
+        ltrace \
+        bridge-utils \
+        ca-certificates \
+        iftop \
+        iperf \
+        iproute \
+        bash \
+        bash-completion \
+        gettext \
+        ncurses; \
+    dnf install -y git \
+        gcc-c++ \
+        gjs \
+        gjs-devel \
+        libpeas-devel \
+        gtksourceview3-devel \
+        libgit2-devel \
+        libgit2-glib-devel \
+        clang-devel \
+        file \
+        vala-devel \
+        vala \
+        llvm-devel \
+        vte-devel \
+        vte291-devel \
+        vala-tools \
+        redhat-rpm-config; \
+    dnf groupinstall -y development-libs \
+                        development-tools \
+                        gnome-software-development; \
+    dnf -y install ninja-build \
+        appstream-devel \
+        autoconf \
+        automake \
+        boost-devel \
+        ctags \
+        ctags-etags \
+        dbus-devel \
+        dbus-x11 \
+        desktop-file-utils \
+        devhelp-devel \
+        devhelp-libs \
+        enchant-devel \
+        file \
+        findutils \
+        flatpak-builder \
+        flatpak-devel \
+        flatpak-libs \
+        elfutils \
+        flex \
+        bison \
+        fpaste \
+        gcc \
+        gcc-c++ \
+        gcc-gfortran \
+        gcc-objc \
+        gcc-objc++ \
+        gdb \
+        gdb-gdbserver \
+        gettext \
+        git-core \
+        gmock-devel \
+        gnustep-base-devel \
+        gspell-devel \
+        gtest-devel \
+        java-devel \
+        json-glib-devel \
+        jsonrpc-glib-devel \
+        libappstream-glib \
+        libappstream-glib-builder-devel \
+        libappstream-glib-devel \
+        libdazzle-devel \
+        libgcc \
+        libgit2-glib-devel \
+        libpeas-devel \
+        libsoup-devel \
+        libsysprof-ui \
+        libxml2-devel \
+        mono-core \
+        mono-devel \
+        procps-ng \
+        psmisc \
+        qt5-qtbase-devel \
+        sudo \
+        sysprof-devel \
+        template-glib-devel \
+        vala \
+        vim \
+        tmux \
+        vte291-devel \
+        webkit2gtk3-devel \
+        wxGTK3-devel \
+        "pkgconfig(protobuf)" \
+        "pkgconfig(glib-2.0)" \
+        "pkgconfig(gobject-introspection-1.0)" \
+        "pkgconfig(zlib)"; \
+        dnf install -y \
+        yum-utils \
+        rpm-build \
+        pixman-devel \
+        libpng-devel \
+        libxml2-devel \
+        freetype-devel \
+        fontconfig-devel \
+        gtk-doc \
+        gnome-common \
+        intltool \
+        libjpeg-devel \
+        libtiff-devel \
+        hicolor-icon-theme \
+        abattis-cantarell-fonts \
+        liberation-mono-fonts \
+        liberation-sans-fonts \
+        liberation-serif-fonts \
+        python-mako \
+        ncurses-devel \
+        icon-naming-utils \
+        dbus-devel \
+        desktop-file-utils \
+        libuuid-devel \
+        appdata-tools \
+        iso-codes-devel \
+        mozjs24-devel \
+        readline-devel \
+        dbus-glib-devel \
+        gcc-c++ \
+        createrepo \
+        lighttpd \
+        gnome-doc-utils \
+        vala-devel \
+        vala-tools \
+        libxslt-devel \
+        fuse-devel \
+        libarchive-devel \
+        libcroco-devel \
+        libpeas-loader-python3.x86_64 \
+        python3-lxml \
+        python3-jedi.noarch \
+        python2-jedi \
+        vim-jedi; \
+        dnf remove openssl-devel -y && \
+        dnf install compat-openssl10-devel -y && \
+        dnf clean all
+
+    # dnf -y install \
+    #     abrt \
+    #     bash-completion \
+    #     bc \
+    #     blktrace \
+    #     btrfs-progs \
+    #     crash \
+    #     dnf-plugins-core && \
+    # dnf install -y gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel && \
+    # dnf install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel xz xz-devel && \
+    # dnf install -y @development-tools && \
+    # dnf reinstall -y glibc-devel.x86_64 && \
+    # dnf clean all
 
 RUN pip3 install meson
 
