@@ -98,11 +98,11 @@ full-setup-base: install-flatpak-system-deps delet-remotes remote-add install-ru
 
 # Debug successfully built flatpak
 run-flatpak-debug-base:
-	flatpak run -d --command=sh org.scarlett.ScarlettOSBase
+	flatpak run -d --command=bash org.scarlett.ScarlettOSBase
 
 # Debug failing flatpak-build
 run-flatpak-builder-debug-base:
-	flatpak-builder --run appdir org.my.Manifest.json sh
+	flatpak-builder --run scarlett_os-base org.scarlett.ScarlettOSBase.json bash
 
 # [developer@gnometop scarlett_os-flatpak]$ flatpak-builder --run --help
 # Usage:
@@ -140,5 +140,4 @@ run-flatpak-builder-debug-base:
 
 # [developer@gnometop scarlett_os-flatpak]$
 
-run-flatpak-builder-uninstall-base:
-	flatpak-builder --run
+run-flatpak-builder-uninstall-base: run-flatpak-builder-debug-base
