@@ -14,7 +14,10 @@ ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
-RUN dnf -y install \
+RUN dnf -y update && \
+    dnf -y reinstall "*" \
+    dnf -y remove vim-minimal && \
+    dnf -y install \
     adwaita-icon-theme \
     atk-devel \
     at-spi2-atk-devel \
@@ -81,10 +84,8 @@ RUN dnf -y install \
     which \
     xorg-x11-server-Xvfb \
   && \
-    dnf install flatpak flatpak-builder wget git bzip2 elfutils make ostree -y && \
-    dnf -y update && \
-        dnf -y reinstall "*" \
-        dnf -y remove vim-minimal && \
+    dnf install flatpak flatpak-builder wget git bzip2 elfutils make ostree -y \
+  && \
         dnf -y install \
         abrt \
         bash-completion \
@@ -267,6 +268,11 @@ RUN dnf -y install \
     # dnf install -y @development-tools && \
     # dnf reinstall -y glibc-devel.x86_64 && \
     # dnf clean all
+
+# Cannot create temporary file - mkstemp: No such file or directory
+# Last metadata expiration check: 0:02:02 ago on Sat May  5 16:17:22 2018.
+# No match for group package "python-devel"
+# No match for group package "python-ldap"
 
 RUN pip3 install meson
 
