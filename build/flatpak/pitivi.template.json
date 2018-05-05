@@ -1,0 +1,365 @@
+{
+    "app-id": "org.pitivi.Pitivi",
+    "version": "master",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.22",
+    "finish-args": ["--command=pitivi",
+                    "--share=ipc", "--socket=x11", "--socket=session-bus", "--socket=pulseaudio",
+                    "--talk-name=ca.desrt.dconf",
+                    "--talk-name=org.freedesktop.Notifications",
+                    "--filesystem=host"],
+    "sdk": "org.gnome.Sdk",
+    "rename-appdata-file": "pitivi.appdata.xml",
+    "rename-desktop-file": "pitivi.desktop",
+    "rename-icon": "pitivi",
+    "copy-icon": true,
+    "build-options" : {
+        "cflags": "-O0 -g",
+        "cxxflags": "-O0 -g",
+        "env": {
+          "PYTHON": "python3",
+          "GST_PLUGIN_SYSTEM_PATH": "/app/lib/gstreamer-1.0/"
+        },
+        "strip": false,
+        "no-debuginfo": true
+    },
+    "modules": [
+        {
+            "name": "yasm",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz",
+                    "sha256": "3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f"
+                }
+            ]
+        },
+        {
+            "name": "sound-theme-freedesktop",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://anongit.freedesktop.org/git/sound-theme-freedesktop.git",
+                    "branch": "0.8"
+                }
+            ]
+        },
+        {
+            "name": "gsound",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://git.gnome.org/browse/gsound",
+                    "branch": "1.0.2"
+                }
+            ]
+        },
+        {
+            "name": "x264",
+            "config-opts": ["--enable-shared", "--enable-static", "--enable-pic", "--disable-lavf"],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.videolan.org/pub/x264/snapshots/x264-snapshot-20140212-2245-stable.tar.bz2",
+                    "sha256": "5d98e9e4faf6dd55e7193ed379aff477b8acbda6777758956ef7e5f05067be18"
+                }
+            ]
+        },
+        {
+            "name": "numpy",
+            "build-options" : {
+              "build-args": ["--share=network"],
+              "cflags": "-O0 -g  -L/usr/lib -Lbuild/temp.linux-x86_64-3.4 -I/usr/include -I/usr/include/python3.4m/",
+              "env": {"ARCHFLAGS": "-arch x86_64"}
+            },
+            "config-opts": ["--module=numpy==1.10.1"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "ipdb",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=ipdb==0.8.1"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "pre-commit",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=pre-commit==0.8.0"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "matplotlib",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=matplotlib==1.5.1"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "nose2",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=nose2==0.6.5"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "pep8",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=pep8==1.6.2"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "python-dbus",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=dbus-python==1.2.4"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "libopus",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/opus/opus-1.1.2.tar.gz",
+                    "sha256": "0e290078e31211baa7b5886bcc8ab6bc048b9fc83882532da4a1a45e58e907fd"
+                }
+            ]
+        },
+        {
+            "name": "frei0r-plugin",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.dyne.org/frei0r/releases/frei0r-plugins-1.4.tar.gz",
+                    "sha256": "8470fcabde9f341b729be3be16385ffc8383d6f3328213907a43851b6e83be57"
+                }
+            ]
+        },
+        {
+            "name": "libsoundtouch",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.surina.net/soundtouch/soundtouch-1.8.0.tar.gz",
+                    "sha256": "3d4161d74ca25c5a98c69dbb8ea10fd2be409ba1a3a0bf81db407c4c261f166b"
+                }
+            ]
+        },
+        {
+            "name": "lame",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/lame/lame-3.99.5.tar.gz",
+                    "sha256": "24346b4158e4af3bd9f2e194bb23eb473c75fb7377011523353196b19b9a23ff"
+                }
+            ]
+        },
+        {
+            "name": "vo-aacenc",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/project/opencore-amr/vo-aacenc/vo-aacenc-0.1.3.tar.gz",
+                    "sha256": "e51a7477a359f18df7c4f82d195dab4e14e7414cbd48cf79cc195fc446850f36"
+                }
+            ]
+        },
+        {
+            "name": "x265",
+            "cmake": true,
+            "subdir":"source",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_1.9.tar.gz",
+                    "sha256": "3e4654133ed957a98708fdb4cb9a154d9e80922b84e26e43fc462a101c5b15c8"
+                }
+            ]
+        },
+        {
+
+            "name": "meson",
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "config-opts": ["--module=meson==0.37.1"],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "py-configure",
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "yelp-xsl",
+            "cleanup-platform": [ "*"  ],
+            "config-opts": ["--disable-doc"],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://git.gnome.org/yelp-xsl",
+                    "branch": "3.20.1"
+                }
+            ]
+        },
+        {
+            "name": "yelp",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://git.gnome.org/browse/yelp",
+                    "branch": "3.20.1"
+                }
+            ]
+        },
+        {
+            "name": "gstreamer",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gstreamer"
+                }
+            ]
+        },
+        {
+            "name": "gst-plugins-base",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-plugins-base"
+                }
+            ]
+        },
+        {
+            "name": "gst-plugins-good",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-plugins-good"
+                }
+            ]
+        },
+        {
+            "name": "gst-plugins-ugly",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-plugins-ugly"
+                }
+            ]
+        },
+        {
+            "name": "gst-plugins-bad",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-plugins-bad"
+                }
+            ]
+        },
+        {
+            "name": "gst-libav",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-libav"
+                }
+            ]
+        },
+        {
+            "name": "gst-python",
+            "config-opts": ["--with-pygi-overrides-dir=/app/lib/python3.4/site-packages/gi/overrides/"],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-python"
+                }
+            ]
+        },
+        {
+            "name": "gst-devtools",
+            "config-opts": ["--validate", "--disable-gtk-doc"],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-devtools"
+                }
+            ]
+        },
+        {
+            "name": "gst-editing-services",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://anongit.freedesktop.org/gstreamer/gst-editing-services"
+                }
+            ]
+        },
+        {
+            "name": "pitivi",
+            "config-opts": ["--libdir=lib", "--prefix=/app"],
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://git.gnome.org/browse/pitivi",
+                    "branch": "master"
+                }
+            ]
+        }
+    ]
+}

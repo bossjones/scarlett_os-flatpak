@@ -1,0 +1,28 @@
+#!/bin/sh
+
+for i in "$@"
+do
+  case $i in
+    --module=*)
+    MODULENAME="${i#*=}"
+    shift
+    ;;
+    *)
+    ARGS="$ARGS $i"
+    shift
+    ;;
+  esac
+done
+
+# NOTE: (PYTHONUSERBASE): Defines the user base directory, which is used to compute the path of the user site-packages directory and Distutils installation paths for python setup.py install --user.
+
+cat <<EOF > Makefile
+all:
+	echo "Nothing"
+
+install:
+	CXX=/usr/bin/g++ CC=/usr/bin/gcc PYTHONUSERBASE=/app/ pip3 install --user $MODULENAME
+
+
+EOF
+

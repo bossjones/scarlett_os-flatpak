@@ -1,0 +1,10 @@
+/baseapp/
+/repo/
+/scarlett_os/
+/scarlett_os-0.1.*
+.flatpak-builder/
+*.done
+*.bundle
+__pycache__/
+*.pyc
+.vscode/
