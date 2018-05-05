@@ -32,7 +32,11 @@
                  "/share/vala",
                  "/lib/systemd",
                  "*.la",
-                 "*.a" ],
+                 "*.a",
+                 "/share/runtime/docs",
+                 "/lib/cmake",
+                 "/lib/python*/test"
+                ],
     "build-options": {
         "cflags": "-O2 -g",
         "cxxflags": "-O2 -g",
@@ -52,19 +56,18 @@
                 "build-args": [
                     "--share=network",
                     "--allow=devel",
+                    /* per-user applications are in $HOME/.local/share/flatpak/app/ */
                     "--filesystem=home"
                 ],
                 /* This is an array containing extra options to pass to configure. */
                 "config-opts": [
-                    "--enable-loadable-sqlite-extensions",
-                    "--enable-shared",
                     "--with-pydebug"
                 ],
                 /* This is set in the environment variable CFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
                 "cflags": "-O0 -g",
                 /* This is set in the environment variable CXXFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
                 "cxxflags": "-O0 -g",
-                "env": {
+                /* "env": {
                     "GST_PLUGIN_SYSTEM_PATH": "/app/lib/gstreamer-1.0/",
                     "FREI0R_PATH": "/app/lib/frei0r-1/",
                     "GSTREAMER": "1.0",
@@ -73,7 +76,7 @@
                     "PYTHON_VERSION": "3.5",
                     "CC": "gcc",
                     "V": "1"
-                },
+                }, */
                 /* If this is true (the default is false) then all ELF files will be stripped after install. */
                 "strip": false,
                 /* By default (if strip is not true) flatpak-builder extracts all debug info in ELF files to a separate files and puts this in an extension. If you want to disable this, set no-debuginfo to true. */
@@ -85,6 +88,22 @@
                     "url": "https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tar.xz",
                     "sha256": "0010f56100b9b74259ebcd5d4b295a32324b58b517403a10d1a2aa7cb22bca40"
                 }
+            ],
+            "cleanup": [
+                "/bin/easy_install-3.5",
+                "/bin/f2py3.5",
+                "/bin/idle3",
+                "/bin/idle3.5",
+                "/bin/pip3",
+                "/bin/pip3.5",
+                "/bin/pydoc3",
+                "/bin/pydoc3.5",
+                "/bin/python3-config",
+                "/bin/python3.5-config",
+                "/bin/python3.5m",
+                "/bin/python3.5m-config",
+                "/bin/pyvenv",
+                "/bin/pyvenv-3.5"
             ]
         }
     ]
