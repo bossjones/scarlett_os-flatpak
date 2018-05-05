@@ -59,8 +59,8 @@ install-flatpak-system-deps:
 ############################################################
 
 run-build:
-	flatpak-builder --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
-	flatpak-builder -v --user --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
+# flatpak-builder --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
+	flatpak-builder --force-clean -v --user --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
 # display contents of dictonary dir
 
 # flatpak-remote-add — Add a remote repository
