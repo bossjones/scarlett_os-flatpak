@@ -56,7 +56,7 @@
                 "build-args": [
                     "--share=network",
                     "--allow=devel",
-                    "--filesystem=home"
+                    "--filesystem=home:rw"
                 ],
                 /* This is an array containing extra options to pass to configure. */
                 "config-opts": [
