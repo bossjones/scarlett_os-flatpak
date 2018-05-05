@@ -30,6 +30,7 @@ NON_ROOT_USER = developer
 
 IMAGE_TAG      := $(username)/$(container_name):$(GIT_SHA)
 CONTAINER_NAME := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
+CONTAINER_NAME_TEST := $(shell echo -n $(username)/$(container_name)-systemd:$(GIT_SHA) | openssl dgst -sha1 | sed 's/^.* //'  )
 
 LOCAL_REPOSITORY = $(HOST_IP):5000
 
@@ -139,6 +140,30 @@ push-force: build-force push
 
 docker-shell:
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
+
+docker-build-systemd-test:
+	docker build -t $(username)/$(container_name)-systemd:$(GIT_SHA) -f .ci/Dockerfile.systemd ./.ci ; \
+	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:latest ; \
+	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
+
+docker-build-systemd-test-force:
+	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name)-systemd:$(GIT_SHA) -f .ci/Dockerfile.systemd ./.ci ; \
+	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:latest ; \
+	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
+
+docker-run-systemd-test:
+	time docker run \
+	--privileged \
+	-i \
+	-e TRACE=1 \
+	--cap-add=ALL \
+	-d \
+	--tty \
+	--name $(CONTAINER_NAME) \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
+	--entrypoint "bash" \
+	$(IMAGE_TAG) \
+	/home/developer/.ci/flatpak-bootstrap.sh
 
 # FIX: placeholder
 travis: build-two-phase
