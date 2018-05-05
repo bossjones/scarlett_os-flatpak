@@ -103,3 +103,42 @@ run-flatpak-debug-base:
 # Debug failing flatpak-build
 run-flatpak-builder-debug-base:
 	flatpak-builder --run appdir org.my.Manifest.json sh
+
+# [developer@gnometop scarlett_os-flatpak]$ flatpak-builder --run --help
+# Usage:
+#   flatpak-builder [OPTION…] DIRECTORY MANIFEST COMMAND [args] - Run command in build sandbox
+
+# Help Options:
+#   -h, --help                              Show help options
+#   --help-all                              Show all help options
+
+# Application Options:
+#   -v, --verbose                           Print debug information during command processing
+#   --arch=ARCH                             Architecture to build for (must be host compatible)
+#   --run                                   Run a command in the build directory
+#   --log-session-bus                       Log session bus calls
+#   --log-system-bus                        Log system bus calls
+#   --ccache                                Use ccache
+#   --share=SHARE                           Share with host
+#   --unshare=SHARE                         Unshare with host
+#   --socket=SOCKET                         Expose socket to app
+#   --nosocket=SOCKET                       Don't expose socket to app
+#   --device=DEVICE                         Expose device to app
+#   --nodevice=DEVICE                       Don't expose device to app
+#   --allow=FEATURE                         Allow feature
+#   --disallow=FEATURE                      Don't allow feature
+#   --filesystem=FILESYSTEM[:ro]            Expose filesystem to app (:ro for read-only)
+#   --nofilesystem=FILESYSTEM               Don't expose filesystem to app
+#   --env=VAR=VALUE                         Set environment variable
+#   --own-name=DBUS_NAME                    Allow app to own name on the session bus
+#   --talk-name=DBUS_NAME                   Allow app to talk to name on the session bus
+#   --system-own-name=DBUS_NAME             Allow app to own name on the system bus
+#   --system-talk-name=DBUS_NAME            Allow app to talk to name on the system bus
+#   --add-policy=SUBSYSTEM.KEY=VALUE        Add generic policy option
+#   --remove-policy=SUBSYSTEM.KEY=VALUE     Remove generic policy option
+#   --persist=FILENAME                      Persist home directory
+
+# [developer@gnometop scarlett_os-flatpak]$
+
+run-flatpak-builder-uninstall-base:
+	flatpak-builder --run

@@ -4,25 +4,41 @@
     "runtime": "org.freedesktop.Platform",
     "sdk": "org.freedesktop.Sdk",
     "runtime-version": "1.6",
-    "cleanup": [
-        "/cache",
-        "/include",
-        "/lib/pkgconfig",
-        "/man",
-        "/share/aclocal",
-        "/share/devhelp",
-        "/share/gir-1.0",
-        "/share/gtk-doc",
-        "/share/man",
-        "/share/pkgconfig",
-        "/share/vala",
-        "/lib/systemd",
-        "*.la",
-        "*.a"
+    "finish-args": [
+        /* Allow access to developer tools */
+        "--allow=devel",
+        "--talk-name=org.freedesktop.Flatpak",
+        /* X11 + XShm access */
+        "--share=ipc",
+        "--socket=x11",
+        /* Wayland access */
+        "--socket=wayland",
+        /* We want full fs access */
+        "--filesystem=host",
+        /* Needs to talk to the network: */
+        "--share=network",
+        "--talk-name=org.gtk.vfs.*"
     ],
+    "cleanup": [ "/cache",
+                 "/include",
+                 "/lib/pkgconfig",
+                 "/man",
+                 "/share/aclocal",
+                 "/share/devhelp",
+                 "/share/gir-1.0",
+                 "/share/gtk-doc",
+                 "/share/man",
+                 "/share/pkgconfig",
+                 "/share/vala",
+                 "/lib/systemd",
+                 "*.la",
+                 "*.a" ],
     "build-options": {
         "cflags": "-O2 -g",
-        "cxxflags": "-O2 -g"
+        "cxxflags": "-O2 -g",
+        "env": {
+            "V": "1"
+        }
     },
     "modules": [
         {
