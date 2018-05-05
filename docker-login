@@ -3,7 +3,7 @@
 echo -e "################# docker-login help #################"
 echo -e "dbus-run-session -- bash\n"
 echo -e "gnome-keyring-daemon --unlock\n"
-echo -e "raspberry\n"
+echo -e "raspberry(Press ENTER)\n"
 echo -e "# press CTRL+D"
 echo -e "docker login\n"
 

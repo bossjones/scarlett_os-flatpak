@@ -141,8 +141,8 @@ docker-shell:
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
 
 # FIX: placeholder
-travis:
-	python --version
+travis: build-two-phase
+
 ############################################[Docker CI - END]##################################################
 
 ############################################[Flatpak - BEGIN]##################################################
