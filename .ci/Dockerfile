@@ -254,7 +254,7 @@ RUN set -xv ; \
         python2-jedi \
         vim-jedi; \
         dnf remove openssl-devel -y && \
-        dnf install compat-openssl10-devel -y && \
+    dnf install compat-openssl10-devel systemd -y && \
         dnf clean all
 
 RUN pip3 install --upgrade pip \
@@ -283,7 +283,41 @@ RUN set -xe \
     mkdir /var/run/dbus && \
     chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /home/${NON_ROOT_USER}
 
+# RUN ( cd /lib/systemd/system/sysinit.target.wants/; \
+#     for i in *; do \
+#     [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; \
+#     done ) \
+#     && ( cd /lib/systemd/system/multi-user.target.wants; \
+#     for i in *; do \
+#     [ $i == systemd-user-sessions.service ] || rm -f $i; \
+#     done ) \
+#     && rm -f /etc/systemd/system/*.wants/*\
+#     && rm -f /lib/systemd/system/local-fs.target.wants/* \
+#     && rm -f /lib/systemd/system/sockets.target.wants/*udev* \
+#     && rm -f /lib/systemd/system/sockets.target.wants/*initctl* \
+#     && rm -f /lib/systemd/system/basic.target.wants/* \
+#     && rm -f /lib/systemd/system/anaconda.target.wants/* \
+#     && rm -f /usr/share/dbus-1/system-services/org.freedesktop.RealtimeKit1.service \
+#     && rm -f /usr/share/dbus-1/system-services/org.freedesktop.UPower.service \
+#     && rm -f /usr/share/dbus-1/system-services/org.freedesktop.Accounts.service \
+#     && rm -f /usr/share/dbus-1/system-services/org.bluez.service \
+#     && rm -f /usr/share/dbus-1/system-services/org.freedesktop.GeoClue2.service
+
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+    rm -f /lib/systemd/system/multi-user.target.wants/*;\
+    rm -f /etc/systemd/system/*.wants/*;\
+    rm -f /lib/systemd/system/local-fs.target.wants/*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+    rm -f /lib/systemd/system/basic.target.wants/*;\
+    rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+# SOURCE: https://github.com/retr0h/docker-images/blob/master/Dockerfile-centos7-systemd-ansible
+# RUN yum -y install sudo
+# RUN /usr/bin/sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/' /etc/sudoers
+
 USER ${NON_ROOT_USER}
 WORKDIR /home/${NON_ROOT_USER}
 
 ENV LANG C.UTF-8
+
