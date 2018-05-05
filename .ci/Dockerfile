@@ -257,26 +257,11 @@ RUN set -xv ; \
         dnf install compat-openssl10-devel -y && \
         dnf clean all
 
-    # dnf -y install \
-    #     abrt \
-    #     bash-completion \
-    #     bc \
-    #     blktrace \
-    #     btrfs-progs \
-    #     crash \
-    #     dnf-plugins-core && \
-    # dnf install -y gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel && \
-    # dnf install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel xz xz-devel && \
-    # dnf install -y @development-tools && \
-    # dnf reinstall -y glibc-devel.x86_64 && \
-    # dnf clean all
-
-# Cannot create temporary file - mkstemp: No such file or directory
-# Last metadata expiration check: 0:02:02 ago on Sat May  5 16:17:22 2018.
-# No match for group package "python-devel"
-# No match for group package "python-ldap"
-
-RUN pip3 install meson
+RUN pip3 install --no-cache-dir --upgrade \
+                --ignore-installed \
+                --force-reinstall \
+                pip setuptools wheel && \
+    pip3 install meson
 
 RUN set -xe \
     && useradd -U -d /home/${NON_ROOT_USER} -m -r -G adm,tty,audio ${NON_ROOT_USER} \
