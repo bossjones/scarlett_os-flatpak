@@ -80,7 +80,21 @@ RUN dnf -y install \
     wayland-protocols-devel \
     which \
     xorg-x11-server-Xvfb \
- && dnf clean all
+  && \
+    dnf install flatpak flatpak-builder wget git bzip2 elfutils make ostree -y && \
+    dnf -y install \
+        abrt \
+        bash-completion \
+        bc \
+        blktrace \
+        btrfs-progs \
+        crash \
+        dnf-plugins-core && \
+    dnf install -y gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel && \
+    dnf install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel xz xz-devel && \
+    dnf install -y @development-tools && \
+    dnf reinstall -y glibc-devel.x86_64 && \
+    dnf clean all
 
 RUN pip3 install meson
 
@@ -96,6 +110,7 @@ RUN set -xe \
     && echo "%${NON_ROOT_USER}     ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && cat /etc/sudoers \
     && echo "${NON_ROOT_USER}:${NON_ROOT_USER}" | chpasswd && \
+    mkdir /var/run/dbus && \
     chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /home/${NON_ROOT_USER}
 
 USER ${NON_ROOT_USER}
