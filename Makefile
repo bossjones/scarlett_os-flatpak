@@ -73,17 +73,17 @@ build-commit:
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
 
 build:
-	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-force:
-	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
+	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-local:
-	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci/Dockerfile ; \
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
 
 tag-local:
