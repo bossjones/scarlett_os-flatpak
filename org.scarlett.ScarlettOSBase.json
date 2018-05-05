@@ -47,6 +47,25 @@
                 /* These are needed for the triggers */
                 "/app/bin/python3 -m pip install --upgrade --ignore-installed pip setuptools==36.0.1 wheel==0.29.0"
             ],
+            "build-options": {
+                "build-args": [
+                    "--share=network"
+                ],
+                "cflags": "-O0 -g",
+                "cxxflags": "-O0 -g",
+                "env": {
+                    "GST_PLUGIN_SYSTEM_PATH": "/app/lib/gstreamer-1.0/",
+                    "FREI0R_PATH": "/app/lib/frei0r-1/",
+                    "GSTREAMER": "1.0",
+                    "ENABLE_PYTHON3": "yes",
+                    "ENABLE_GTK": "yes",
+                    "PYTHON_VERSION": "3.5",
+                    "CC": "gcc",
+                    "V": "1"
+                },
+                "strip": false,
+                "no-debuginfo": false
+            },
             "sources": [
                 {
                     "type": "archive",

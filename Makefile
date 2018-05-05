@@ -1,3 +1,127 @@
+SHELL := $(shell which bash)
+
+DIR   := $(shell basename $$PWD)
+
+RED=\033[0;31m
+GREEN=\033[0;32m
+ORNG=\033[38;5;214m
+BLUE=\033[38;5;81m
+NC=\033[0m
+
+export RED
+export GREEN
+export NC
+export ORNG
+export BLUE
+
+export PATH := ./bin:./venv/bin:$(PATH)
+
+username := scarlettos
+container_name := scarlett_os-flatpak
+docker_developer_chroot := .docker-developer
+
+GIT_BRANCH    = $(shell git rev-parse --abbrev-ref HEAD)
+GIT_SHA       = $(shell git rev-parse HEAD)
+BUILD_DATE    = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+VERSION       = latest
+NON_ROOT_USER = developer
+
+IMAGE_TAG      := $(username)/$(container_name):$(GIT_SHA)
+CONTAINER_NAME := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
+
+LOCAL_REPOSITORY = $(HOST_IP):5000
+
+TAG ?= $(VERSION)
+ifeq ($(TAG),@branch)
+	override TAG = $(shell git symbolic-ref --short HEAD)
+	@echo $(value TAG)
+endif
+
+# verify that certain variables have been defined off the bat
+check_defined = \
+    $(foreach 1,$1,$(__check_defined))
+__check_defined = \
+    $(if $(value $1),, \
+      $(error Undefined $1$(if $(value 2), ($(strip $2)))))
+
+list_allowed_args := interface
+
+list:
+	@$(MAKE) -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort
+
+##################################################[Docker CI]##################################################
+# FIXME: Implement this
+build-two-phase: build
+	time docker run \
+	--privileged \
+	-i \
+	-e TRACE=1 \
+	--cap-add=ALL \
+	--tty \
+	--name $(CONTAINER_NAME) \
+	--entrypoint "bash" \
+	$(IMAGE_TAG) \
+	/app/bin/flatpak-bootstrap.sh
+
+# Commit backend Container
+	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
+	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(username)/$(container_name):latest
+
+# Commit backend Container
+build-commit:
+	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
+
+build:
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
+
+build-force:
+	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
+
+build-local:
+	docker build --tag $(username)/$(container_name):$(GIT_SHA) . ; \
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
+
+tag-local:
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):$(TAG)
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
+
+push-local:
+	docker push $(LOCAL_REPOSITORY)/$(username)/$(container_name):$(TAG)
+	docker push $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
+
+build-push-local: build-local tag-local push-local
+
+build-push-two-phase: build-two-phase tag push
+
+tag:
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
+	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
+
+build-push: build tag
+	docker push $(username)/$(container_name):latest
+	docker push $(username)/$(container_name):$(GIT_SHA)
+	docker push $(username)/$(container_name):$(TAG)
+
+push:
+	docker push $(username)/$(container_name):latest
+	docker push $(username)/$(container_name):$(GIT_SHA)
+	docker push $(username)/$(container_name):$(TAG)
+
+push-force: build-force push
+
+docker-shell:
+	docker exec -ti $(username)/$(container_name):latest /bin/bash
+
+# FIX: placeholder
+travis:
+	python --version
+############################################[Docker CI - END]##################################################
+
+############################################[Flatpak - BEGIN]##################################################
 remote-add:
 	flatpak remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
@@ -104,42 +228,7 @@ run-flatpak-debug-base:
 run-flatpak-builder-debug-base:
 	flatpak-builder --run scarlett_os-base org.scarlett.ScarlettOSBase.json bash
 
-# [developer@gnometop scarlett_os-flatpak]$ flatpak-builder --run --help
-# Usage:
-#   flatpak-builder [OPTION…] DIRECTORY MANIFEST COMMAND [args] - Run command in build sandbox
-
-# Help Options:
-#   -h, --help                              Show help options
-#   --help-all                              Show all help options
-
-# Application Options:
-#   -v, --verbose                           Print debug information during command processing
-#   --arch=ARCH                             Architecture to build for (must be host compatible)
-#   --run                                   Run a command in the build directory
-#   --log-session-bus                       Log session bus calls
-#   --log-system-bus                        Log system bus calls
-#   --ccache                                Use ccache
-#   --share=SHARE                           Share with host
-#   --unshare=SHARE                         Unshare with host
-#   --socket=SOCKET                         Expose socket to app
-#   --nosocket=SOCKET                       Don't expose socket to app
-#   --device=DEVICE                         Expose device to app
-#   --nodevice=DEVICE                       Don't expose device to app
-#   --allow=FEATURE                         Allow feature
-#   --disallow=FEATURE                      Don't allow feature
-#   --filesystem=FILESYSTEM[:ro]            Expose filesystem to app (:ro for read-only)
-#   --nofilesystem=FILESYSTEM               Don't expose filesystem to app
-#   --env=VAR=VALUE                         Set environment variable
-#   --own-name=DBUS_NAME                    Allow app to own name on the session bus
-#   --talk-name=DBUS_NAME                   Allow app to talk to name on the session bus
-#   --system-own-name=DBUS_NAME             Allow app to own name on the system bus
-#   --system-talk-name=DBUS_NAME            Allow app to talk to name on the system bus
-#   --add-policy=SUBSYSTEM.KEY=VALUE        Add generic policy option
-#   --remove-policy=SUBSYSTEM.KEY=VALUE     Remove generic policy option
-#   --persist=FILENAME                      Persist home directory
-
-# [developer@gnometop scarlett_os-flatpak]$
-
 run-flatpak-builder-uninstall-base: run-flatpak-builder-debug-base
 
 rebuild-base: step1 step2 step3 step4
+############################################[Flatpak - END]##################################################

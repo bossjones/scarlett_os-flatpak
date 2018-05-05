@@ -1,0 +1,38 @@
+---
+matrix:
+  fast_finish: true
+  include:
+  - python: '3.5'
+    env:
+      DOCKER_COMPOSE_VERSION: 1.17.1
+      TEST_TARGET: default
+      DOCKER_DATA: "$HOME/docker_data"
+      DOCKER_VERSION: 17.09.1~ce-0~ubuntu
+    sudo: required
+    dist: trusty
+    language: python
+    group: edge
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-cache search docker
+  - apt-cache madison docker-ce
+  - sudo apt-get --allow-downgrades -y -o Dpkg::Options::="--force-confnew" install docker-ce=$DOCKER_VERSION
+  - sudo rm -f /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
+
+script:
+  - make travis
+
+notifications:
+  email:
+    recipients:
+      - bossjones@theblacktonystark.com
+    on_success: always # default: change
+    on_failure: always # default: always
