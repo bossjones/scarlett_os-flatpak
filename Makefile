@@ -170,11 +170,17 @@ docker-run-systemd-test:
 	$(IMAGE_TAG_TEST) true
 
 # run test
+# docker exec -i -t \
+# --privileged \
+# -u $(NON_ROOT_USER) \
+# -w /home/$(NON_ROOT_USER) \
+# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
 	docker exec -i -t \
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) ls -lta
+
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
 	time docker run \
@@ -194,11 +200,17 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	$(IMAGE_TAG_TEST) true
 
 # run test
+# docker exec -i -t \
+# --privileged \
+# -u $(NON_ROOT_USER) \
+# -w /home/$(NON_ROOT_USER) \
+# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
+
 	docker exec -i -t \
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) ls -lta
 
 # FIX: placeholder
 travis: build-two-phase
