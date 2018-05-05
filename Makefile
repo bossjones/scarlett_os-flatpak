@@ -179,7 +179,7 @@ docker-run-systemd-test:
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) ls -lta
+	$(CONTAINER_NAME_TEST) ls -lta .ci/
 
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
@@ -210,7 +210,7 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) ls -lta
+	$(CONTAINER_NAME_TEST) ls -lta .ci/
 
 # FIX: placeholder
 travis: build-two-phase
