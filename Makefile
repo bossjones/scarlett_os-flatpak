@@ -152,7 +152,7 @@ docker-build-systemd-test-force:
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:latest ; \
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
-docker-run-systemd-test:
+docker-run-systemd-test: docker-build-systemd-test
 	time docker run \
 	--privileged \
 	-i \
