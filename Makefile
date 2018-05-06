@@ -202,19 +202,13 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--name $(CONTAINER_NAME_TEST) \
 	$(IMAGE_TAG_TEST) true
 
-# run test
-# docker exec -i -t \
-# --privileged \
-# -u $(NON_ROOT_USER) \
-# -w /home/$(NON_ROOT_USER) \
-# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
-
 	docker exec -i -t \
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
 	$(CONTAINER_NAME_TEST) ls -lta .ci/ && bash .ci/ci-entrypoint.sh
 
+# --entrypoint "/usr/lib/systemd/systemd"
 docker-run-systemd-test-force2: docker-build-systemd-test-force
 	time docker run \
 	--privileged \
@@ -231,13 +225,6 @@ docker-run-systemd-test-force2: docker-build-systemd-test-force
 	--entrypoint "/usr/sbin/init" \
 	--name $(CONTAINER_NAME_TEST) \
 	$(IMAGE_TAG_TEST) true
-
-# run test
-# docker exec -i -t \
-# --privileged \
-# -u $(NON_ROOT_USER) \
-# -w /home/$(NON_ROOT_USER) \
-# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
 
 	docker exec \
 	--tty \

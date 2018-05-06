@@ -14,16 +14,24 @@ export PATH=/usr/lib64/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:
 export HISTSIZE=1000000
 export TRACE=1
 
+printf "\n"
+printf ${green}"Start dbus-daemon --system"${neutral}
 sudo dbus-daemon --system --fork
 
+printf "\n"
+printf ${green}"Run dbus-launch"${neutral}
 _DBUS_LAUNCH_OUTPUT=($(dbus-launch))
 
 export $_DBUS_LAUNCH_OUTPUT
 
+printf "\n"
+printf ${green}"Create ~/.dbusrc"${neutral}
 env | grep -i DBUS_SESSION_BUS_ADDRESS > ~/.dbusrc
 sed -i "s,^,export ,g" ~/.dbusrc
 echo 'export DBUS_SYSTEM_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS}"' >> ~/.dbusrc
 
+printf "\n"
+printf ${green}"Dump ~/.dbusrc"${neutral}
 cat ~/.dbusrc
 
 source ~/.dbusrc
@@ -31,4 +39,6 @@ source ~/.dbusrc
 # exec make rebuild-base
 # exec ./ci/rebuild-base.sh
 
+printf "\n"
+printf ${green}"Run CI Tests"${neutral}
 make rebuild-base
