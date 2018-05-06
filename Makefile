@@ -215,6 +215,13 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	-w /home/$(NON_ROOT_USER) \
 	$(CONTAINER_NAME_TEST) ls -lta .ci/ && bash .ci/ci-entrypoint.sh
 
+docker-exec-test-bash:
+	docker exec -i -t \
+	--privileged \
+	-u $(NON_ROOT_USER) \
+	-w /home/$(NON_ROOT_USER) \
+	$(CONTAINER_NAME_TEST) bash -l
+
 # FIX: placeholder
 travis: build-two-phase
 
