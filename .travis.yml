@@ -29,8 +29,6 @@ before_install:
 
 script:
   - make travis
-  # - 'docker exec ${container_id} env TERM=xterm php /etc/ansible/roles/role_under_test/tests/memcached-test.php'
-
 
 notifications:
   email:
