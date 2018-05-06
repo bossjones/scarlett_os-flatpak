@@ -215,6 +215,37 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	-w /home/$(NON_ROOT_USER) \
 	$(CONTAINER_NAME_TEST) ls -lta .ci/ && bash .ci/ci-entrypoint.sh
 
+docker-run-systemd-test-force2: docker-build-systemd-test-force
+	time docker run \
+	--privileged \
+	-i \
+	-e TRACE=1 \
+	--cap-add=ALL \
+	--security-opt seccomp=unconfined \
+	--tmpfs /run \
+	--tmpfs /run/lock \
+	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+	-v $(PWD):/home/$(NON_ROOT_USER) \
+	-d \
+	--tty \
+	--entrypoint "/usr/sbin/init" \
+	--name $(CONTAINER_NAME_TEST) \
+	$(IMAGE_TAG_TEST) true
+
+# run test
+# docker exec -i -t \
+# --privileged \
+# -u $(NON_ROOT_USER) \
+# -w /home/$(NON_ROOT_USER) \
+# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
+
+	docker exec \
+	--tty \
+	--privileged \
+	-u $(NON_ROOT_USER) \
+	-w /home/$(NON_ROOT_USER) \
+	$(CONTAINER_NAME_TEST) env env TERM=xterm ls -lta .ci/ && bash .ci/ci-entrypoint.sh
+
 docker-exec-test-bash:
 	docker exec -i -t \
 	--privileged \
