@@ -26,3 +26,29 @@ https://github.com/flathub/org.jamovi.jamovi/blob/master/python-deps.json
 
 
 `export $(dbus-launch)`
+
+
+# Packages
+
+```
+# System Applications
+calamares
+dconf-editor
+dnssec-trigger
+firewall-config
+gconf-editor
+gnome-tweak-tool
+grub2-efi
+gtk-murrine-engine
+numix-icon-theme-circle
+seahorse
+system-config-printer
+tilix
+tor
+
+# Flatpak
+flatpak
+flatpak-builder
+xdg-desktop-portal
+
+```
