@@ -1,5 +1,7 @@
 FROM scarlettos/scarlett_os-flatpak:latest
 
+COPY . /home/developer/
+
 USER root
 
 # RUN ( cd /lib/systemd/system/sysinit.target.wants/; \
