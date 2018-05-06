@@ -140,6 +140,9 @@ push:
 	docker push $(username)/$(container_name):$(GIT_SHA)
 	docker push $(username)/$(container_name):$(TAG)
 
+pull:
+	docker push $(username)/$(container_name):latest
+
 push-force: build-force push
 
 docker-shell:
@@ -202,31 +205,6 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	-w /home/$(NON_ROOT_USER) \
 	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
-# --entrypoint "/usr/lib/systemd/systemd"
-docker-run-systemd-test-force2: docker-build-systemd-test-force
-	time docker run \
-	--privileged \
-	-i \
-	-e TRACE=1 \
-	--cap-add=ALL \
-	--security-opt seccomp=unconfined \
-	--tmpfs /run \
-	--tmpfs /run/lock \
-	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER) \
-	-d \
-	--tty \
-	--entrypoint "/usr/sbin/init" \
-	--name $(CONTAINER_NAME_TEST) \
-	$(IMAGE_TAG_TEST) true
-
-	docker exec \
-	--tty \
-	--privileged \
-	-u $(NON_ROOT_USER) \
-	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
-
 docker-exec-test-bash:
 	docker exec -i -t \
 	--privileged \
@@ -235,7 +213,7 @@ docker-exec-test-bash:
 	$(CONTAINER_NAME_TEST) bash -l
 
 # FIX: placeholder
-travis: build-two-phase
+travis: pull docker-run-systemd-test
 
 ############################################[Docker CI - END]##################################################
 
