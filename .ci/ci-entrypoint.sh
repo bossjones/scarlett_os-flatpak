@@ -3,6 +3,10 @@
 # SOURCE: https://github.com/ghjnut/docker-steamcmd/blob/2f409cbd7e841b2f910c34c26df10f81fa9d408f/bin/build_auth
 [[ "$TRACE" ]] && set -x
 
+# Load utility bash functions
+_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $_DIR/shared_functions
+
 [[ ! -d /var/run/dbus ]] && sudo mkdir /var/run/dbus
 
 export LANG=C.UTF-8
