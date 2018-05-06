@@ -332,7 +332,7 @@ run-build:
 add-new-repository:
 	flatpak -v --user remote-add --no-gpg-verify --if-not-exists scarlett_os-base-repo scarlett_os-base-repo
 # display contants of scarlett_os-base-repo dir
-	tree scarlett_os-base-repo
+# tree scarlett_os-base-repo
 
 # flatpak-install — Install an application or runtime
 # flatpak install [OPTION...] REMOTE-NAME REF...
