@@ -172,17 +172,11 @@ docker-run-systemd-test: docker-build-systemd-test
 	--name $(CONTAINER_NAME_TEST) \
 	$(IMAGE_TAG_TEST) true
 
-# run test
-# docker exec -i -t \
-# --privileged \
-# -u $(NON_ROOT_USER) \
-# -w /home/$(NON_ROOT_USER) \
-# $(CONTAINER_NAME_TEST) /home/$(NON_ROOT_USER)/.ci/ci-entrypoint.sh
-	docker exec -i -t \
+	docker exec --tty \
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) ls -lta .ci/ && bash .ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
@@ -202,11 +196,11 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--name $(CONTAINER_NAME_TEST) \
 	$(IMAGE_TAG_TEST) true
 
-	docker exec -i -t \
+	docker exec --tty \
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) ls -lta .ci/ && bash .ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 # --entrypoint "/usr/lib/systemd/systemd"
 docker-run-systemd-test-force2: docker-build-systemd-test-force
@@ -231,7 +225,7 @@ docker-run-systemd-test-force2: docker-build-systemd-test-force
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) env env TERM=xterm ls -lta .ci/ && bash .ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 docker-exec-test-bash:
 	docker exec -i -t \

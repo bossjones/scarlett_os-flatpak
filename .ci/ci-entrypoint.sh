@@ -20,22 +20,26 @@ export TRACE=1
 
 printf "\n"
 printf ${green}"Start dbus-daemon --system"${neutral}
+printf "\n"
 sudo dbus-daemon --system --fork
 
 printf "\n"
 printf ${green}"Run dbus-launch"${neutral}
+printf "\n"
 _DBUS_LAUNCH_OUTPUT=($(dbus-launch))
 
 export $_DBUS_LAUNCH_OUTPUT
 
 printf "\n"
 printf ${green}"Create ~/.dbusrc"${neutral}
+printf "\n"
 env | grep -i DBUS_SESSION_BUS_ADDRESS > ~/.dbusrc
 sed -i "s,^,export ,g" ~/.dbusrc
 echo 'export DBUS_SYSTEM_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS}"' >> ~/.dbusrc
 
 printf "\n"
 printf ${green}"Dump ~/.dbusrc"${neutral}
+printf "\n"
 cat ~/.dbusrc
 
 source ~/.dbusrc
@@ -45,4 +49,5 @@ source ~/.dbusrc
 
 printf "\n"
 printf ${green}"Run CI Tests"${neutral}
+printf "\n"
 make rebuild-base
