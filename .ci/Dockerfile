@@ -297,6 +297,8 @@ RUN set -xe \
     mkdir /var/run/dbus && \
     chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /home/${NON_ROOT_USER}
 
+VOLUME [ "/sys/fs/cgroup", "/tmp", "/run" ]
+
 USER ${NON_ROOT_USER}
 WORKDIR /home/${NON_ROOT_USER}
 
