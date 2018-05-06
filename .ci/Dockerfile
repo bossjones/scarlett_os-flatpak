@@ -2,6 +2,8 @@ FROM fedora:27
 
 LABEL Maintainer "Malcolm Jones <bossjones@theblacktonystark.com>"
 
+# LABEL RUN="docker run -it --name NAME --privileged --ipc=host --net=host --pid=host -e HOST=/host -e NAME=NAME -e IMAGE=IMAGE -v /run:/run -v /var/log:/var/log -v /etc/localtime:/etc/localtime -v /:/host IMAGE"
+
 ENV NON_ROOT_USER developer
 ENV container docker
 ENV TERM xterm-256color
@@ -255,7 +257,7 @@ RUN set -xv ; \
         vim-jedi; \
         dnf remove openssl-devel -y && \
     dnf install -y compat-openssl10-devel && \
-    dnf install -y systemd dbus-x11 && \
+    dnf install -y systemd dbus-x11 tree sudo && \
         dnf clean all
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -266,6 +268,8 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == system
     rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
     rm -f /lib/systemd/system/basic.target.wants/*;\
     rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+RUN /usr/bin/sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/' /etc/sudoers
 
 RUN pip3 install --upgrade pip \
         && \

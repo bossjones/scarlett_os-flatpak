@@ -50,6 +50,9 @@ __check_defined = \
 
 list_allowed_args := interface
 
+info:
+	echo -e "$(username)/$(container_name):$(GIT_SHA)\n"
+
 list:
 	@$(MAKE) -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort
 
