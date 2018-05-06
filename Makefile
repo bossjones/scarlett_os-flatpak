@@ -141,7 +141,7 @@ push:
 	docker push $(username)/$(container_name):$(TAG)
 
 pull:
-	docker push $(username)/$(container_name):latest
+	docker pull $(username)/$(container_name):latest
 
 push-force: build-force push
 
