@@ -28,4 +28,7 @@ cat ~/.dbusrc
 
 source ~/.dbusrc
 
-exec make rebuild-base
+# exec make rebuild-base
+# exec ./ci/rebuild-base.sh
+
+make rebuild-base
