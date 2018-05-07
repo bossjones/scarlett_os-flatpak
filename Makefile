@@ -361,3 +361,30 @@ run-flatpak-builder-base-bash: run-flatpak-builder-debug-base
 
 rebuild-base: step1 step2 step3 step4
 ############################################[Flatpak - END]##################################################
+
+
+
+
+run-build-scarlettos:
+	flatpak-builder --force-clean -v --user --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOS.json
+
+# flatpak-remote-add — Add a remote repository
+# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-remote-add
+# flatpak remote-add [OPTION...] [--from] NAME LOCATION
+add-new-repository-scarlettos:
+	flatpak -v --user remote-add --no-gpg-verify --if-not-exists scarlett_os-base-repo scarlett_os-base-repo
+
+# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-install
+install-the-app-scarlettos:
+	flatpak -v --user install scarlett_os-base-repo org.scarlett.ScarlettOS
+
+check-app-installed-scarlettos:
+	@echo -e "\n"
+	flatpak info org.scarlett.ScarlettOS
+	@echo -e "\n"
+
+run-app-scarlettos:
+	flatpak run org.scarlett.ScarlettOS
+
+# REBUILD SCARLETT
+rebuild-scarlettos: run-build-scarlettos add-new-repository-scarlettos install-the-app-scarlettos check-app-installed-scarlettos
