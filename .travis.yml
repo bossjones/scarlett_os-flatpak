@@ -28,7 +28,6 @@ before_install:
   - docker-compose --version
 
 script:
-  - docker run --help
   - make travis
 
 notifications:

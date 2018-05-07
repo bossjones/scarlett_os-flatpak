@@ -5,16 +5,16 @@ ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
-COPY . /home/developer/
+# COPY . /home/developer/
 
 USER root
 
-RUN sudo usermod \
+RUN usermod \
          -u $HOST_USER_ID \
          -g $HOST_GROUP_ID \
          developer && \
-    sudo chown $HOST_USER_ID:$HOST_GROUP_ID \
-         -R /home/developer/
+    chown $HOST_USER_ID:$HOST_GROUP_ID \
+         -Rv /home/developer/
 
 # RUN ( cd /lib/systemd/system/sysinit.target.wants/; \
 #     for i in *; do \
