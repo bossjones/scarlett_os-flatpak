@@ -148,6 +148,32 @@
                 "/bin/pyvenv",
                 "/bin/pyvenv-3.5"
             ]
+        },
+        {
+        "name": "appdata",
+        "buildsystem": "simple",
+        "build-commands": [
+            "install -Dm644 data/ScarlettOS.appdata.xml  /app/share/appdata/org.scarlett.scarlettos.appdata.xml"
+        ],
+        "sources": [
+            {
+            "type": "file",
+            "path": "data/ScarlettOS.appdata.xml"
+            }
+        ]
+        },
+        {
+        "name": "icons",
+        "buildsystem": "simple",
+        "build-commands": [
+                "sh data/icons-install.sh"
+        ],
+        "sources": [
+            {
+            "type": "file",
+            "path": "data/icons-install.sh"
+            }
+        ]
         }
     ]
 }

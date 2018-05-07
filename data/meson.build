@@ -46,16 +46,16 @@ foreach i : icon_sizes
   )
 endforeach
 
-custom_target('pitivi.desktop',
-    output : 'pitivi.desktop',
-    input : 'pitivi.desktop.in',
+custom_target('scarlettOS.desktop',
+    output : 'scarlettOS.desktop',
+    input : 'scarlettOS.desktop.in',
     command : [intltool_merge, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
     install : true,
     install_dir : get_option('datadir') + '/applications')
 
-custom_target('pitivi.appdata.xml',
-    output : 'pitivi.appdata.xml',
-    input : 'pitivi.appdata.xml.in',
+custom_target('scarlettOS.appdata.xml',
+    output : 'scarlettOS.appdata.xml',
+    input : 'scarlettOS.appdata.xml.in',
     command : [intltool_merge, '--xml-style', podir, '@INPUT@', '@OUTPUT@'],
     install : true,
     install_dir : get_option('datadir') + '/appdata')
