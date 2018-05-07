@@ -6,6 +6,11 @@
     "runtime-version": "3.24",
     "tags": ["nightly"],
     "desktop-file-name-prefix": "(Nightly) ",
+    "rename-appdata-file": "ScarlettOS.appdata.xml",
+    "rename-desktop-file": "ScarlettOS.desktop",
+    "rename-icon": "ScarlettOS",
+    "copy-icon": true,
+
     "finish-args": [
         /* Allow access to developer tools */
         "--allow=devel",
