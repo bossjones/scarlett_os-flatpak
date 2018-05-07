@@ -1,10 +1,50 @@
 subdir('icons')
 
-install_subdir('pixmaps', install_dir: pkgdatadir)
-install_subdir('ui', install_dir: pkgdatadir)
-install_subdir('audiopresets', install_dir: pkgdatadir)
-install_subdir('videopresets', install_dir: pkgdatadir)
-install_subdir('gstpresets', install_dir: pkgdatadir)
+# install_subdir('pixmaps', install_dir: pkgdatadir)
+# install_subdir('ui', install_dir: pkgdatadir)
+# install_subdir('audiopresets', install_dir: pkgdatadir)
+# install_subdir('videopresets', install_dir: pkgdatadir)
+# install_subdir('gstpresets', install_dir: pkgdatadir)
+
+# Merging the translations with the desktop file
+i18n.merge_file(
+  output: PROJECT_RDNN_NAME + '.desktop',
+  input: PROJECT_RDNN_NAME + '.desktop.in',
+  po_dir: join_paths(meson.source_root(), 'po'),
+  type: 'desktop',
+  install: true,
+  install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'applications')
+)
+
+# Validating the desktop file
+desktop_file_validate = find_program('desktop-file-validate', required:false)
+if desktop_file_validate.found()
+  test (
+    'Validate desktop file',
+    desktop_file_validate,
+    args: join_paths(meson.current_build_dir (), PROJECT_RDNN_NAME + '.desktop')
+  )
+endif
+
+# Validating the appdata file
+appstreamcli = find_program(['appstreamcli', 'appstream-util'], required: false)
+if appstreamcli.found()
+  test (
+    'Validate appdata file',
+    appstreamcli,
+    args: ['validate', join_paths(meson.current_build_dir (), PROJECT_RDNN_NAME + '.appdata.xml')]
+  )
+endif
+
+# Installing the icons
+icon_sizes = ['16', '22', '32', '48', '256']
+
+foreach i : icon_sizes
+  install_data(
+    join_paths('icons/hicolor', i + 'x' + i, 'apps', PROJECT_RDNN_NAME + '.png'),
+    install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'icons', 'hicolor', i + 'x' + i, 'apps')
+  )
+endforeach
 
 custom_target('pitivi.desktop',
     output : 'pitivi.desktop',

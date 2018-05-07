@@ -52,3 +52,14 @@ flatpak-builder
 xdg-desktop-portal
 
 ```
+
+
+# removed the following manifest config
+
+```
+
+    "rename-appdata-file": "ScarlettOS.appdata.xml",
+    "rename-desktop-file": "ScarlettOS.desktop",
+    "rename-icon": "ScarlettOS",
+    /* "copy-icon": true, */
+```
