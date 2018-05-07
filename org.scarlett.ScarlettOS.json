@@ -6,6 +6,8 @@
     "runtime-version": "3.24",
     "tags": ["nightly"],
     "desktop-file-name-prefix": "(Nightly) ",
+    "rename-desktop-file": "scarlettos.desktop",
+    "rename-icon": "scarlettos",
     "finish-args": [
         /* Allow access to developer tools */
         "--allow=devel",
@@ -24,6 +26,9 @@
         "--own-name=org.scarlett.Listener.*",
 
         "--talk-name=org.freedesktop.secrets",
+        "--talk-name=org.freedesktop.DBus.Proprieties",
+        "--talk-name=org.freedesktop.IBus",
+        "--talk-name=org.freedesktop.Notifications",
 
         /* Pulseaudio */
         "--socket=pulseaudio",
