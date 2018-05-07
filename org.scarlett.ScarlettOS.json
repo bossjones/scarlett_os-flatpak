@@ -160,7 +160,8 @@
         "buildsystem": "simple",
         "build-commands": [
             "install -Dm644 ScarlettOS.appdata.xml  /app/share/appdata/org.scarlett.scarlettos.appdata.xml",
-            "sh icons-install.sh"
+            "sh icons-install.sh",
+            "sh install-desktop-file.sh"
         ],
         "sources": [
             {
@@ -175,6 +176,10 @@
             {
                 "type": "file",
                 "path": "data/icons-install.sh"
+            },
+            {
+                "type": "file",
+                "path": "data/install-desktop-file.sh"
             }
         ]
         }
