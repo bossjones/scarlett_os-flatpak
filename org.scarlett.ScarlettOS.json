@@ -156,28 +156,25 @@
             ]
         },
         {
-        "name": "appdata",
+        "name": "appdata_and_icons",
         "buildsystem": "simple",
         "build-commands": [
-            "install -Dm644 ScarlettOS.appdata.xml  /app/share/appdata/org.scarlett.scarlettos.appdata.xml"
+            "install -Dm644 ScarlettOS.appdata.xml  /app/share/appdata/org.scarlett.scarlettos.appdata.xml",
+            "sh icons-install.sh"
         ],
         "sources": [
+            {
+                "type": "git",
+                "url": "https://github.com/bossjones/scarlett_os-flatpak.git",
+                "branch": "master"
+            },
             {
             "type": "file",
             "path": "data/ScarlettOS.appdata.xml"
-            }
-        ]
-        },
-        {
-        "name": "icons",
-        "buildsystem": "simple",
-        "build-commands": [
-                "sh icons-install.sh"
-        ],
-        "sources": [
+            },
             {
-            "type": "file",
-            "path": "data/icons-install.sh"
+                "type": "file",
+                "path": "data/icons-install.sh"
             }
         ]
         }
