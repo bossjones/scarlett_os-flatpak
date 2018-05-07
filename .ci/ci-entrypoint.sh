@@ -44,8 +44,10 @@ cat ~/.dbusrc
 
 source ~/.dbusrc
 
-# exec make rebuild-base
-# exec ./ci/rebuild-base.sh
+printf "\n"
+printf ${green}"List Directories"${neutral}
+printf "\n"
+ls -lta
 
 printf "\n"
 printf ${green}"Run CI Tests"${neutral}
