@@ -28,10 +28,13 @@ BUILD_DATE    = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 VERSION       = latest
 NON_ROOT_USER = developer
 
-IMAGE_TAG      := $(username)/$(container_name):$(GIT_SHA)
-IMAGE_TAG_TEST := $(username)/$(container_name)-systemd:$(GIT_SHA)
-CONTAINER_NAME := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
+
+IMAGE_TAG           := $(username)/$(container_name):$(GIT_SHA)
+IMAGE_TAG_TEST      := $(username)/$(container_name)-systemd:$(GIT_SHA)
+CONTAINER_NAME      := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
 CONTAINER_NAME_TEST := $(shell echo -n $(username)/$(container_name)-systemd:$(GIT_SHA) | openssl dgst -sha1 | sed 's/^.* //'  )
+FIXUID              := $(shell id -u)
+FIXGID              := $(shell id -g)
 
 LOCAL_REPOSITORY = $(HOST_IP):5000
 
@@ -149,7 +152,12 @@ docker-shell:
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
 
 docker-build-systemd-test:
-	docker build -t $(username)/$(container_name)-systemd:$(GIT_SHA) -f .ci/Dockerfile.systemd ./.ci ; \
+	docker build \
+		--build-arg HOST_USER_ID=$(FIXUID) \
+		--build-arg HOST_GROUP_ID=$(FIXGID) \
+		-t $(username)/$(container_name)-systemd:$(GIT_SHA) \
+		-f .ci/Dockerfile.systemd \
+		./.ci ; \
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:latest ; \
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
@@ -163,12 +171,14 @@ docker-run-systemd-test: docker-build-systemd-test
 	--privileged \
 	-i \
 	-e TRACE=1 \
+	-e HOST_USER_ID=$(FIXUID) \
+	-e HOST_GROUP_ID=$(FIXGID) \
 	--cap-add=ALL \
 	--security-opt seccomp=unconfined \
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER) \
+	-v $(PWD):/home/$(NON_ROOT_USER):rw \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
