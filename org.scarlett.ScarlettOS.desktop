@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ScarlettOS
+Comment=Home Automation Voice Controlled System
+Exec=python --version
+Terminal=true
+Type=Application
+Icon=org.scarlett.ScarlettOS
+StartupNotify=true
+Categories=Game;
