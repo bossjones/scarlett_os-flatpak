@@ -11,7 +11,8 @@ ARG GID
 
 USER root
 
-RUN usermod \
+RUN groupmod -g $GID developer && \
+    usermod \
          -u $UID \
          -g $GID \
          developer && \
