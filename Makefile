@@ -178,7 +178,7 @@ docker-run-systemd-test: docker-build-systemd-test
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER):rw \
+	-v $(PWD):/home/$(NON_ROOT_USER)/dev:rw \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
@@ -202,7 +202,7 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER) \
+	-v $(PWD):/home/$(NON_ROOT_USER)/dev:rw \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
