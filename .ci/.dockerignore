@@ -85,3 +85,5 @@ venv/
 SOCAT_PID
 .viminfo
 hi
+.git
+.gitignore
