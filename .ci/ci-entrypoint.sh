@@ -60,7 +60,7 @@ flatpak --user list --runtime --show-details
 printf "\n"
 printf ${green}"Bootstrap Runtime User"${neutral}
 printf "\n"
-./bootstrap-runtime-user
+./ci./bootstrap-runtime-user
 
 printf "\n"
 printf ${green}"Run CI Tests"${neutral}
