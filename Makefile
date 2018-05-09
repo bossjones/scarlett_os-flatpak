@@ -153,8 +153,8 @@ docker-shell:
 
 docker-build-systemd-test:
 	docker build \
-		--build-arg HOST_USER_ID=$(FIXUID) \
-		--build-arg HOST_GROUP_ID=$(FIXGID) \
+		--build-arg UID=$(FIXUID) \
+		--build-arg GID=$(FIXGID) \
 		-t $(username)/$(container_name)-systemd:$(GIT_SHA) \
 		-f .ci/Dockerfile.systemd \
 		./.ci ; \
@@ -162,7 +162,10 @@ docker-build-systemd-test:
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
 docker-build-systemd-test-force:
-	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name)-systemd:$(GIT_SHA) -f .ci/Dockerfile.systemd ./.ci ; \
+	docker build \
+	--build-arg UID=$(FIXUID) \
+	--build-arg GID=$(FIXGID) \
+	--rm --force-rm --pull --no-cache -t $(username)/$(container_name)-systemd:$(GIT_SHA) -f .ci/Dockerfile.systemd ./.ci ; \
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:latest ; \
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
@@ -171,8 +174,8 @@ docker-run-systemd-test: docker-build-systemd-test
 	--privileged \
 	-i \
 	-e TRACE=1 \
-	-e HOST_USER_ID=$(FIXUID) \
-	-e HOST_GROUP_ID=$(FIXGID) \
+	-e UID=$(FIXUID) \
+	-e GID=$(FIXGID) \
 	--cap-add=ALL \
 	--security-opt seccomp=unconfined \
 	--tmpfs /run \
