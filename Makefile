@@ -178,7 +178,7 @@ docker-run-systemd-test: docker-build-systemd-test
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER)/dev:rw \
+	-v $(PWD):/home/$(NON_ROOT_USER):rw \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
@@ -189,7 +189,7 @@ docker-run-systemd-test: docker-build-systemd-test
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) env TERM=xterm bash dev/.ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
@@ -202,7 +202,7 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--tmpfs /run \
 	--tmpfs /run/lock \
 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-	-v $(PWD):/home/$(NON_ROOT_USER)/dev:rw \
+	-v $(PWD):/home/$(NON_ROOT_USER):rw \
 	-d \
 	--tty \
 	--entrypoint "/usr/sbin/init" \
@@ -213,7 +213,7 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	--privileged \
 	-u $(NON_ROOT_USER) \
 	-w /home/$(NON_ROOT_USER) \
-	$(CONTAINER_NAME_TEST) env TERM=xterm bash dev/.ci/ci-entrypoint.sh
+	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 docker-exec-test-bash:
 	docker exec -i -t \

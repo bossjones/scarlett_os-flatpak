@@ -1,11 +1,13 @@
 FROM scarlettos/scarlett_os-flatpak:latest
 
 ARG HOST_USER_ID=1000
-ENV HOST_USER_ID ${HOST_USER_ID}
+# ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
-ENV HOST_GROUP_ID ${HOST_GROUP_ID}
+# ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
 # COPY . /home/developer/
+
+# COPY --chown=developer . /home/developer/
 
 USER root
 
