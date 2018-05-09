@@ -1,0 +1,37 @@
+# time docker run \
+# 	--privileged \
+# 	-i \
+# 	-e TRACE=1 \
+# 	-e HOST_USER_ID=$(FIXUID) \
+# 	-e HOST_GROUP_ID=$(FIXGID) \
+# 	--cap-add=ALL \
+# 	--security-opt seccomp=unconfined \
+# 	--tmpfs /run \
+# 	--tmpfs /run/lock \
+# 	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+# 	-v $(PWD):/home/$(NON_ROOT_USER):rw \
+# 	-d \
+# 	--tty \
+# 	--entrypoint "/usr/sbin/init" \
+# 	--name $(CONTAINER_NAME_TEST) \
+#   $(IMAGE_TAG_TEST) true
+
+version: "3.2"
+services:
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=shelters
+  functions:
+    build: .
+    depends_on:
+      - database
+    tty: true
+    user: developer
+    environment:
+      - TRAVIS_BRANCH
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/app
