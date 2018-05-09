@@ -50,6 +50,19 @@ printf "\n"
 ls -lta
 
 printf "\n"
+printf ${green}"List Flatpak Remotes BEFORE"${neutral}
+printf "\n"
+flatpak remotes
+flatpak --user remote-list --show-details
+flatpak --user list --runtime --show-details
+
+# Note: since the build artifacts for flatpak are being written to a volume mount, we lose them in between stages. Re Add them in travis build
+printf "\n"
+printf ${green}"Bootstrap Runtime User"${neutral}
+printf "\n"
+./bootstrap-runtime-user
+
+printf "\n"
 printf ${green}"Run CI Tests"${neutral}
 printf "\n"
 make rebuild-base
