@@ -6,41 +6,30 @@
     "runtime-version": "3.24",
     "tags": ["nightly"],
     "desktop-file-name-prefix": "(Nightly) ",
-    "rename-desktop-file": "scarlettos.desktop",
-    "rename-icon": "scarlettos",
     "copy-icon": true,
     "finish-args": [
         /* Allow access to developer tools */
         "--allow=devel",
         "--talk-name=org.freedesktop.Flatpak",
-
         /* X11 + XShm access */
-        "--socket=x11", "--share=ipc",
-
+        "--socket=x11",
+        "--share=ipc",
         /* Wayland access */
         "--socket=wayland",
-
         /* Needs to talk to the network: */
         "--share=network",
-
         "--own-name=org.scarlett.Listener",
         "--own-name=org.scarlett.Listener.*",
-
         "--talk-name=org.freedesktop.secrets",
         "--talk-name=org.freedesktop.DBus.Proprieties",
         "--talk-name=org.freedesktop.IBus",
         "--talk-name=org.freedesktop.Notifications",
-
         /* Pulseaudio */
         "--socket=pulseaudio",
-
         "--device=dri",
         "--talk-name=org.gtk.vfs.*",
-
         "--socket=session-bus",
-
         "--filesystem=host",
-
         "--system-talk-name=org.freedesktop.Avahi",
         "--talk-name=org.freedesktop.secrets",
         "--filesystem=xdg-run/keyring",
@@ -55,33 +44,6 @@
         "--talk-name=ca.desrt.dconf",
         "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
     ],
-    "cleanup": [ "/cache",
-                 "/include",
-                 "/lib/pkgconfig",
-                 "/man",
-                 "/share/aclocal",
-                 "/share/devhelp",
-                 "/share/gir-1.0",
-                 "/share/gtk-doc",
-                 "/share/man",
-                 "/share/pkgconfig",
-                 "/share/vala",
-                 "/lib/systemd",
-                 "*.la",
-                 "*.a",
-                 "/share/runtime/docs",
-                 "/lib/cmake",
-                 "/lib/python*/test",
-                 "/share",
-                 "/bin/chardetect",
-                 "/bin/cygdb",
-                 "/bin/cython",
-                 "/bin/cythonize",
-                 "/bin/nanocat",
-                 "/lib/debug",
-                 "/lib/*.a",
-                 "/lib/*.la"
-                ],
     "build-options": {
         "cflags": "-O2 -g",
         "cxxflags": "-O2 -g",
@@ -94,14 +56,14 @@
             "name": "cpython",
             "post-install": [
                 /* These are needed for the triggers */
-                "/app/bin/python3 -m pip install --no-cache-dir --upgrade --ignore-installed --force-reinstall --no-index --find-links=\"file://${PWD}\" --prefix=/app pip setuptools wheel"
+                "ls -lta `pwd`",
+                "/app/bin/python3 -m pip install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} pip setuptools wheel"
             ],
             "build-options": {
                 /* This is an array containing extra options to pass to flatpak build. */
                 "build-args": [
                     "--share=network",
-                    "--allow=devel",
-                    "--filesystem=home:rw"
+                    "--allow=devel"
                 ],
                 /* This is an array containing extra options to pass to configure. */
                 "config-opts": [
@@ -137,49 +99,76 @@
                     "url": "https://files.pythonhosted.org/packages/5d/c1/45947333669b31bc6b4933308dd07c2aa2fedcec0a95b14eedae993bd449/wheel-0.31.0.tar.gz",
                     "sha256": "1ae8153bed701cb062913b72429bcf854ba824f973735427681882a688cb55ce"
                 }
-            ],
-            "cleanup": [
-                "/bin/easy_install-3.5",
-                "/bin/f2py3.5",
-                "/bin/idle3",
-                "/bin/idle3.5",
-                "/bin/pip3",
-                "/bin/pip3.5",
-                "/bin/pydoc3",
-                "/bin/pydoc3.5",
-                "/bin/python3-config",
-                "/bin/python3.5-config",
-                "/bin/python3.5m",
-                "/bin/python3.5m-config",
-                "/bin/pyvenv",
-                "/bin/pyvenv-3.5"
+            ]
+        },
+        {
+            "name": "tree",
+            "no-autogen": true,
+            "build-options": {
+                /* This is an array containing extra options to pass to flatpak build. */
+                "build-args": [
+                    "--share=network",
+                    "--allow=devel",
+                    "--filesystem=home:rw"
+                ],
+                /* This is set in the environment variable CFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
+                "cflags": "-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64",
+                /* If this is true (the default is false) then all ELF files will be stripped after install. */
+                "strip": false,
+                /* By default (if strip is not true) flatpak-builder extracts all debug info in ELF files to a separate files and puts this in an extension. If you want to disable this, set no-debuginfo to true. */
+                "no-debuginfo": false
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://mama.indstate.edu/users/ice/tree/src/tree-1.7.0.tgz",
+                    "sha256": "6957c20e82561ac4231638996e74f4cfa4e6faabc5a2f511f0b4e3940e8f7b12"
+                },
+                {
+                    "type": "patch",
+                    "path": "tree-Makefile.patch"
+                }
             ]
         },
         {
         "name": "appdata_and_icons",
         "buildsystem": "simple",
         "build-commands": [
-            "install -Dm644 ScarlettOS.appdata.xml  /app/share/appdata/org.scarlett.scarlettos.appdata.xml",
-            "sh icons-install.sh",
-            "sh install-desktop-file.sh"
+            "ls -lta",
+            "env",
+            "mkdir -p /app/share/metainfo/",
+            "mkdir -p /app/share/appdata/",
+            "mkdir -p /app/share/applications/",
+            "mkdir -p /app/cache/scarlett/",
+            "mkdir -p /app/share/icons/hicolor/64x64/apps/",
+            "cp data/ScarlettOS.appdata.xml /app/share/metainfo/org.scarlett.ScarlettOS.appdata.xml",
+            "cp data/icons/64x64/scarlettOS.png /app/share/icons/hicolor/64x64/apps/org.scarlett.ScarlettOS.png",
+            "cp data/ScarlettOS.desktop /app/share/applications/org.scarlett.ScarlettOS.desktop"
         ],
         "sources": [
             {
-                "type": "git",
-                "url": "https://github.com/bossjones/scarlett_os-flatpak.git",
-                "branch": "master"
-            },
-            {
-            "type": "file",
-            "path": "data/ScarlettOS.appdata.xml"
+                "type": "file",
+                "path": "data/icons-install.sh",
+                "dest-filename": "icons-install.sh"
             },
             {
                 "type": "file",
-                "path": "data/icons-install.sh"
+                "path": "data/install-desktop-file.sh",
+                "dest-filename": "install-desktop-file.sh"
             },
             {
                 "type": "file",
-                "path": "data/install-desktop-file.sh"
+                "path": "data/icons/64x64/scarlettOS.png"
+            },
+            {
+                "type": "file",
+                "path": "data/ScarlettOS.desktop",
+                "dest-filename": "org.scarlett.ScarlettOS.desktop"
+            },
+            {
+                "type": "file",
+                "path": "data/ScarlettOS.appdata.xml",
+                "dest-filename": "org.scarlett.ScarlettOS.appdata.xml"
             }
         ]
         }

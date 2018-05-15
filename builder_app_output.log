@@ -1,0 +1,14 @@
+(flatpak build:3495): flatpak-DEBUG: Opening user flatpak installation at path /home/developer/.local/share/flatpak
+(flatpak build:3495): flatpak-DEBUG: No installations directory in /etc/flatpak/installations.d. Skipping
+(flatpak build:3495): flatpak-DEBUG: Allowing dri access
+(flatpak build:3495): flatpak-DEBUG: Allowing host-fs access
+(flatpak build:3495): flatpak-DEBUG: skipping export for path /etc/ssl
+(flatpak build:3495): flatpak-DEBUG: skipping export for path /etc/pki
+(flatpak build:3495): flatpak-DEBUG: Allowing x11 access
+(flatpak build:3495): flatpak-DEBUG: Allowing wayland access
+(flatpak build:3495): flatpak-DEBUG: Allowing pulseaudio access
+(flatpak build:3495): flatpak-DEBUG: Allowing session-dbus access
+(flatpak build:3495): flatpak2-DEBUG: bwrap args '--symlink usr/bin /bin --ro-bind /etc /etc --ro-bind /media /media --ro-bind /opt /opt --ro-bind /dev /dev --bind /tmp /tmp --ro-bind /boot /boot --ro-bind /mnt /mnt --symlink usr/lib /lib --ro-bind /root /root --bind /var /var --ro-bind '/lost+found' '/lost+found' --bind /run /run --ro-bind /home /home --symlink usr/sbin /sbin --symlink usr/lib64 /lib64 --ro-bind /srv /srv --ro-bind /sys /sys --ro-bind /usr /usr --ro-bind /proc /proc --bind /run/user/1000/.dbus-proxy/ /run/user/1000/.dbus-proxy/ --file 19 /.flatpak-info'
+(flatpak build:3495): flatpak2-DEBUG: Running 'bwrap --args 21 /usr/libexec/flatpak-dbus-proxy --fd=18 unix:path=/var/run/dbus/system_bus_socket /run/user/1000/.dbus-proxy/system-bus-proxy-RSA3IZ --filter --talk=org.freedesktop.Avahi'
+
+bash-4.3$

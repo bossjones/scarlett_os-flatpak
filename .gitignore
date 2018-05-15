@@ -8,3 +8,9 @@
 __pycache__/
 *.pyc
 .vscode/
+scarlett_os-base-repo/
+scarlett_os-base/
+scarlett_os-repo/
+scarlett_os-local/
+scarlett_os-repo.bak/
+tree.log

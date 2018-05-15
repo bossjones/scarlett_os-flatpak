@@ -63,3 +63,10 @@ xdg-desktop-portal
     "rename-icon": "ScarlettOS",
     /* "copy-icon": true, */
 ```
+
+
+# debug me later
+
+```
+/home/developer/.pyenv/versions/3.6.5/bin/python3.6: /lib/libc.so.6: version `GLIBC_2.25' not found (required by /home/developer/.pyenv/versions/3.6.5/bin/python3.6)
+```

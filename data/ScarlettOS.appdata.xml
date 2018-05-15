@@ -2,7 +2,7 @@
 <!-- Copyright 2018 Malcolm Jones <bossjones@theblacktonystark.com> -->
 <component type="desktop">
   <id>org.scarlett.ScarlettOS</id>
-  <launchable type="desktop">ScarlettOS.desktop</launchable>
+  <launchable type="desktop">org.scarlett.ScarlettOS.desktop</launchable>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>LGPL-2.0+</project_license>
   <name>ScarlettOS</name>
@@ -25,6 +25,5 @@
   </kudos>
   <update_contact>bossjones@theblacktonystark.com</update_contact>
   <project_group>SCARLETT</project_group>
-  <translation type="gettext">scarlettos</translation>
   <developer_name>The ScarlettOS Team</developer_name>
 </component>

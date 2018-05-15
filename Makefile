@@ -59,9 +59,18 @@ info:
 list:
 	@$(MAKE) -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort
 
+.PHONY: remove-state-dir
+remove-state-dir:
+	rm -rfv .flatpak-builder/
+
 ##################################################[Docker CI]##################################################
 # FIXME: Implement this
 build-two-phase: build
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	time docker run \
 	--privileged \
 	-i \
@@ -81,6 +90,11 @@ build-two-phase: build
 #################################################################
 
 build-two-phase-force: build-force
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	time docker run \
 	--privileged \
 	-i \
@@ -99,27 +113,57 @@ build-two-phase-force: build-force
 
 # Commit backend Container
 build-commit:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	time docker commit --message "Makefile docker CI dep install for $(username)/$(container_name)" $(CONTAINER_NAME) $(IMAGE_TAG)
 
 build:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-force:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker build --rm --force-rm --pull --no-cache -t $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-local:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker build --tag $(username)/$(container_name):$(GIT_SHA) ./.ci ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
 
 tag-local:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):$(TAG)
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
 
 push-local:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker push $(LOCAL_REPOSITORY)/$(username)/$(container_name):$(TAG)
 	docker push $(LOCAL_REPOSITORY)/$(username)/$(container_name):latest
 
@@ -130,28 +174,58 @@ build-push-two-phase: build-two-phase tag push
 build-push-two-phase-force: build-two-phase-force tag push
 
 tag:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
 
 build-push: build tag
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker push $(username)/$(container_name):latest
 	docker push $(username)/$(container_name):$(GIT_SHA)
 	docker push $(username)/$(container_name):$(TAG)
 
 push:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker push $(username)/$(container_name):latest
 	docker push $(username)/$(container_name):$(GIT_SHA)
 	docker push $(username)/$(container_name):$(TAG)
 
 pull:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker pull $(username)/$(container_name):latest
 
 push-force: build-force push
 
 docker-shell:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
 
 docker-build-systemd-test:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker build \
 		--build-arg UID=$(FIXUID) \
 		--build-arg GID=$(FIXGID) \
@@ -162,6 +236,11 @@ docker-build-systemd-test:
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
 docker-build-systemd-test-force:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker build \
 	--build-arg UID=$(FIXUID) \
 	--build-arg GID=$(FIXGID) \
@@ -170,6 +249,11 @@ docker-build-systemd-test-force:
 	docker tag $(username)/$(container_name)-systemd:$(GIT_SHA) $(username)/$(container_name)-systemd:$(TAG)
 
 docker-run-systemd-test: docker-build-systemd-test
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	time docker run \
 	--privileged \
 	-i \
@@ -196,6 +280,11 @@ docker-run-systemd-test: docker-build-systemd-test
 
 
 docker-run-systemd-test-force: docker-build-systemd-test-force
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	time docker run \
 	--privileged \
 	-i \
@@ -219,6 +308,11 @@ docker-run-systemd-test-force: docker-build-systemd-test-force
 	$(CONTAINER_NAME_TEST) env TERM=xterm bash .ci/ci-entrypoint.sh
 
 docker-exec-test-bash:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	docker exec -i -t \
 	--privileged \
 	-u $(NON_ROOT_USER) \
@@ -233,10 +327,20 @@ travis: pull docker-run-systemd-test
 ############################################[Flatpak - BEGIN]##################################################
 
 remote-add-system:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
 
 remote-add-user:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak --user remote-add --no-gpg-verify --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak --user remote-add --no-gpg-verify --if-not-exists gnome https://sdk.gnome.org/gnome.flatpakrepo
 
@@ -248,6 +352,11 @@ bootstrap-runtime-user: remote-add-user install-runtime-user
 bootstrap-runtime-system: remote-add-system remote-add-system
 
 install-runtime-user:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 # install gnome under user space
 	flatpak --user install gnome org.gnome.Platform//3.22 || true
 	flatpak --user install gnome org.gnome.Sdk//3.22 || true
@@ -265,6 +374,11 @@ install-runtime-user:
 	flatpak --user list --runtime --show-details
 
 install-runtime-system:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 # install gnome globally
 	flatpak install gnome org.gnome.Platform//3.22 || true
 	flatpak install gnome org.gnome.Sdk//3.22 || true
@@ -282,6 +396,11 @@ install-runtime-system:
 	flatpak list --runtime --show-details
 
 install-gpg-keys:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	# Install the freedesktop 1.4 platform and SDK (runtime for building the app)
 	# flatpak remote-add --if-not-exists gnome http://sdk.gnome.org/repo/
 	curl -L 'https://sdk.gnome.org/keys/gnome-sdk.gpg' > /home/developer/gnome-sdk.gpg
@@ -290,6 +409,11 @@ install-gpg-keys:
 install-runtime: install-runtime-user install-runtime-system
 
 install-gnome-2.6-runtime:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak --user install gnome org.gnome.Platform//3.26 || true
 	flatpak --user install gnome org.gnome.Sdk//3.26 || true
 	flatpak remotes
@@ -299,6 +423,11 @@ install-gnome-2.6-runtime:
 	flatpak list --runtime --show-details
 
 delete-remotes:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak remotes
 	flatpak --user remote-delete --force gnome || true
 	flatpak --user remote-delete --force flathub || true
@@ -306,6 +435,11 @@ delete-remotes:
 	flatpak remote-delete --force flathub || true
 
 install-flatpak-system-deps:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	sudo dnf install flatpak-devel flatpak-builder flatpak-runtime-config wget git bzip2 elfutils make ostree -y
 
 ############################################################
@@ -313,6 +447,11 @@ install-flatpak-system-deps:
 ############################################################
 
 run-build:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 # flatpak-builder --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
 	flatpak-builder --force-clean -v --user --repo=scarlett_os-base-repo scarlett_os-base org.scarlett.ScarlettOSBase.json
 # display contents of dictonary dir
@@ -321,6 +460,11 @@ run-build:
 # SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-remote-add
 # flatpak remote-add [OPTION...] [--from] NAME LOCATION
 add-new-repository:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak -v --user remote-add --no-gpg-verify --if-not-exists scarlett_os-base-repo scarlett_os-base-repo
 # display contants of scarlett_os-base-repo dir
 # tree scarlett_os-base-repo
@@ -329,14 +473,27 @@ add-new-repository:
 # flatpak install [OPTION...] REMOTE-NAME REF...
 # SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-install
 install-the-app:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak -v --user install scarlett_os-base-repo org.scarlett.ScarlettOSBase
 
 check-app-installed:
-	@echo -e "\n"
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak info org.scarlett.ScarlettOSBase
-	@echo -e "\n"
 
 run-app:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak run org.scarlett.ScarlettOSBase
 
 all: run-build add-new-repository install-the-app check-app-installed run-app
@@ -352,10 +509,20 @@ full-setup-base: install-flatpak-system-deps delet-remotes remote-add install-ru
 
 # Debug successfully built flatpak
 run-flatpak-debug-base:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak run -d --command=bash org.scarlett.ScarlettOSBase
 
 # Debug failing flatpak-build
 run-flatpak-builder-debug-base:
+	@printf "=======================================\n"
+	@printf "\n"
+	@printf "$$GREEN $@$$NC\n"
+	@printf "\n"
+	@printf "=======================================\n"
 	flatpak-builder --run scarlett_os-base org.scarlett.ScarlettOSBase.json bash
 
 run-flatpak-builder-uninstall-base: run-flatpak-builder-debug-base
@@ -365,26 +532,4 @@ run-flatpak-builder-base-bash: run-flatpak-builder-debug-base
 rebuild-base: step1 step2 step3 step4
 ############################################[Flatpak - END]##################################################
 
-run-build-scarlettos:
-	flatpak-builder --force-clean -v --user --repo=scarlett_os-repo scarlett_os org.scarlett.ScarlettOS.json
-
-# flatpak-remote-add — Add a remote repository
-# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-remote-add
-# flatpak remote-add [OPTION...] [--from] NAME LOCATION
-add-new-repository-scarlettos:
-	flatpak -v --user remote-add --no-gpg-verify --if-not-exists scarlett_os-repo scarlett_os-repo
-
-# SOURCE: http://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-install
-install-the-app-scarlettos:
-	flatpak -v --user install scarlett_os-repo org.scarlett.ScarlettOS
-
-check-app-installed-scarlettos:
-	@echo -e "\n"
-	flatpak info org.scarlett.ScarlettOS
-	@echo -e "\n"
-
-run-app-scarlettos:
-	flatpak run org.scarlett.ScarlettOS
-
-# REBUILD SCARLETT
-rebuild-scarlettos: run-build-scarlettos add-new-repository-scarlettos install-the-app-scarlettos check-app-installed-scarlettos
+include *.mk

@@ -1,0 +1,118 @@
+flatpak-builder --arch=x86_64 --ccache --force-clean --state-dir /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/flatpak-builder --download-only --disable-updates --stop-at=appdata_and_icons /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /home/developer/Projects/scarlett_os-flatpak/org.scarlett.ScarlettOS.json
+Emptying app dir '/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build'
+
+flatpak-builder --arch=x86_64 --ccache --force-clean --disable-updates --disable-download --state-dir /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/flatpak-builder --stop-at=appdata_and_icons /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /home/developer/Projects/scarlett_os-flatpak/org.scarlett.ScarlettOS.json
+Downloading sources
+Stopping at module appdata_and_icons
+Starting build of org.scarlett.ScarlettOS
+Cache hit for cpython, skipping build
+Cache hit for tree, skipping build
+Stopping at module appdata_and_icons
+Everything cached, checking out from cache
+Pruning cache
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'ls -lta'
+total 3588
+drwxr-xr-x  3 developer developer      60 May 15 16:30 ..
+drwxrwxr-x 13 developer developer    4096 May 15 16:30 .
+-rw-rw-r--  1 developer developer    7755 May 15 16:30 org.scarlett.ScarlettOS.json
+drwxrwxr-x  2 developer developer    4096 May 15 16:02 strace_output
+drwxrwxr-x  4 developer developer    4096 May 15 16:01 data
+drwxrwxr-x  2 developer developer    4096 May 15 16:01 .ci
+drwxrwxr-x  3 developer developer    4096 May 15 16:01 build
+drwxrwxr-x  8 developer developer    4096 May 15 16:00 .git
+-rw-rw-r--  1 developer developer     221 May 15 15:59 .gitignore
+-rw-rw-r--  1 developer developer    5965 May 15 15:41 dump_test
+-rwxrwxr-x  1 developer developer    6526 May 15 15:41 dump-flatpak-build.sh
+-rwxrwxr-x  1 developer developer    6181 May 15 15:37 flatpak-build.sh
+-rw-rw-r--  1 developer developer   19165 May 15 15:37 Makefile
+-rw-rw-r--  1 developer developer     910 May 15 15:37 settings.conf
+-rw-rw-r--  1 developer developer    1198 May 15 15:37 GITISSUE.md
+-rw-rw-r--  1 developer developer    7498 May 15 15:37 LEARNING.md
+drwxrwxr-x  4 developer developer    4096 May 15 14:07 scarlett_os-repo
+-rw-rw-r--  1 developer developer     943 May 15 13:53 build.log
+-rw-rw-r--  1 developer developer    6097 May 14 22:36 scarlettos.mk
+-rw-rw-r--  1 developer developer 3226624 May 14 20:58 tree.log
+drwxrwxr-x  5 developer developer    4096 May 12 17:57 scarlett_os-repo.bak
+-rw-rw-r--  1 developer developer    1405 May 10 13:27 README.md
+-rw-rw-r--  1 developer developer  243886 May 10 12:15 cleanup.log
+-rw-rw-r--  1 developer developer     944 May 10 11:46 tree-Makefile.patch
+-rw-rw-r--  1 developer developer     629 May 10 10:40 scarlett-Makefile
+drwxrwxr-x  2 developer developer    4096 May  9 17:43 .vscode
+drwxrwxr-x  9 developer developer    4096 May  9 17:00 .flatpak-builder
+-rw-rw-r--  1 developer developer    1928 May  9 16:59 base.mk
+-rw-rw-r--  1 developer developer     343 May  6 22:40 org.scarlett.ScarlettOS.desktop.ORIG
+-rw-rw-r--  1 developer developer    2239 May  6 20:36 .travis.yml
+-rwxrwxr-x  1 developer developer     343 May  6 19:49 docker-login
+drwxr-xr-x  7 developer developer    4096 May  5 11:38 scarlett_os-base-repo
+-rw-rw-r--  1 developer developer    5189 May  5 11:35 org.scarlett.ScarlettOSBase.json
+-rw-rw-r--  1 developer developer    3291 May  5 11:23 python-deps.json
+-rwxrwxr-x  1 developer developer     147 May  5 00:12 getenvvar.py
+-rwxrwxr-x  1 developer developer     110 May  5 00:12 launch.py
+-rw-rw-r--  1 developer developer    3392 May  5 00:12 meson.build
+-rw-rw-r--  1 developer developer     112 May  5 00:12 meson_options.txt
+-rw-rw-r--  1 developer developer    2030 May  5 00:12 org.pygame.baseapp-py36.json
+-rwxrwxr-x  1 developer developer    1229 May  5 00:12 python_configure.py
+drwxrwxr-x  4 developer developer    4096 Dec 31  1969 scarlett_os-base
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c env
+CPLUS_INCLUDE_PATH=/app/include
+LDFLAGS=-L/app/lib
+G_ENABLE_DIAGNOSTIC=1
+TERM=xterm-256color
+SHELL=/bin/sh
+FLATPAK_ARCH=x86_64
+LC_ALL=en_US.utf8
+USER=developer
+LD_LIBRARY_PATH=/app/lib:/usr/lib/ffmpeg/lib
+GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/gstreamer-1.0
+CCACHE_DIR=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/flatpak-builder/ccache
+V=1
+CXXFLAGS=-O2 -g
+FLATPAK_ID=org.scarlett.ScarlettOS
+XDG_CONFIG_DIRS=/app/etc/xdg:/etc/xdg
+PATH=/app/bin:/usr/bin
+C_INCLUDE_PATH=/app/include
+PWD=/home/developer/Projects/scarlett_os-flatpak
+FLATPAK_DEST=/app
+NOCONFIGURE=1
+SHLVL=1
+HOME=/home/developer
+CFLAGS=-O2 -g
+XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/share
+PKG_CONFIG_PATH=/app/lib/pkgconfig:/app/share/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
+ACLOCAL_PATH=/app/share/aclocal
+XDG_RUNTIME_DIR=/run/user/1000
+GI_TYPELIB_PATH=/app/lib/girepository-1.0
+_=/usr/bin/env
+
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'mkdir -p /app/share/metainfo/'
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'mkdir -p /app/share/appdata/'
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'mkdir -p /app/share/applications/'
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'mkdir -p /app/cache/scarlett/'
+
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'mkdir -p /app/share/icons/hicolor/64x64/apps/'
+
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'cp data/ScarlettOS.appdata.xml /app/share/metainfo/org.scarlett.ScarlettOS.appdata.xml'
+
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'cp data/icons/64x64/scarlettOS.png /app/share/icons/hicolor/64x64/apps/org.scarlett.ScarlettOS.png'
+
+
+
+flatpak build --share=network --nofilesystem=host --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder --filesystem=/home/developer/Projects/scarlett_os-flatpak --filesystem=/home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/builds/org.scarlett.ScarlettOS.json-flatpak-org.gnome.Platform-x86_64-3.24-feature-scarlett-build --env=V=1 '--env=CFLAGS=-O2 -g' '--env=CXXFLAGS=-O2 -g' --env=NOCONFIGURE=1 /home/developer/.var/app/org.gnome.Builder/cache/gnome-builder/projects/scarlett_os-flatpak/flatpak/staging/x86_64-feature-scarlett-build /bin/sh -c 'cp data/ScarlettOS.desktop /app/share/applications/org.scarlett.ScarlettOS.desktop'
+
