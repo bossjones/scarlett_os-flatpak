@@ -1,7 +1,7 @@
 {
     "app-id": "org.scarlett.ScarlettOS",
     "runtime": "org.gnome.Platform",
-    "command": "/usr/bin/bash",
+    "command": "/usr/bin/sh",
     "sdk": "org.gnome.Sdk",
     "runtime-version": "3.24",
     "tags": ["nightly"],
@@ -124,28 +124,6 @@
         },
 
         {
-            "name": "pycairo",
-            "disabled": true,
-            "build-options": {
-                "env": {
-                    "PYTHON": "/app/bin/python3"
-                }
-            },
-            "buildsystem": "simple",
-            "build-commands": [
-                "python3 ./setup.py sdist",
-                "pip3 install dist/*.tar.gz"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/pygobject/pycairo/releases/download/v1.14.1/pycairo-1.14.1.tar.gz",
-                    "sha256": "0d13a0a6eeaf0c357db04392943eb9b25767445608d31dde1307f003f68c5754"
-                }
-            ]
-        },
-
-        {
             "name": "meson",
             "build-options": {
                 "env": {
@@ -236,6 +214,27 @@
                     "type": "git",
                     "branch": "cee2a4f215d5edf2e27b9964d3cfcb28a9d4941c",
                     "url": "https://github.com/GNOME/gobject-introspection.git"
+                }
+            ]
+        },
+
+        {
+            "name": "pycairo",
+            "build-options": {
+                "env": {
+                    "PYTHON": "/app/bin/python3"
+                }
+            },
+            "buildsystem": "simple",
+            "build-commands": [
+                "python3 ./setup.py sdist",
+                "pip3 install dist/*.tar.gz"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/pygobject/pycairo/releases/download/v1.14.1/pycairo-1.14.1.tar.gz",
+                    "sha256": "0d13a0a6eeaf0c357db04392943eb9b25767445608d31dde1307f003f68c5754"
                 }
             ]
         },
@@ -472,33 +471,64 @@
 
         {
             "name": "python-gstreamer",
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
             "disabled": true,
             "build-options": {
                 "env": {
-                    "PYTHON": "/usr/bin/python3"
+                    "PYTHON": "/usr/bin/python3",
+                    "PYTHONUSERBASE": "/app"
                 }
             },
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://anongit.freedesktop.org/git/gstreamer/gst-python.git"
+                    "branch": "1c6a57b0d1f8b3f16d67a8cdb39bafc22c7b3b51",
+                    "url": "https://github.com/GStreamer/gst-python.git"
                 }
             ]
         },
 
         {
             "name": "pyxdg",
-            "disabled": true,
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
             "buildsystem": "simple",
             "build-options": {
                 "env": {
-                    "PYTHON": "/app/bin/python3"
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
                 }
             },
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://anongit.freedesktop.org/xdg/pyxdg"
+                    "branch": "7db14dcf4c4305c3859a2d9fcf9f5da2db328330",
+                    "url": "https://github.com/takluyver/pyxdg.git"
+                }
+            ],
+            "build-commands": [
+                "python3 ./setup.py sdist",
+                "pip3 install dist/*.tar.gz"
+            ]
+        },
+
+        {
+            "name": "python-pyparsing",
+            "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
+                }
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/pyparsing/pyparsing-2.1.10.tar.gz",
+                    "sha512": "21af73d6f479d52746f269c8fbaf90c1107a8aec756d30af8c7c4e6a2ff0ea9659cc07816b7ea19286bc12d43497f5e8e63351453bf18daf6a1cb380a195532e"
                 }
             ],
             "build-commands": [
@@ -509,11 +539,15 @@
 
         {
             "name": "pdbpp-disabled",
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
             "buildsystem": "simple",
             "disabled": true,
             "build-options": {
                 "env": {
-                    "PYTHON": "/app/bin/python3"
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
                 }
             },
             "build-commands": [
@@ -531,6 +565,9 @@
 
         {
             "name": "pdbpp",
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
             "buildsystem": "simple",
             "build-commands": [
                 /* These are needed for the triggers */
@@ -563,6 +600,96 @@
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/fd/e3/da39a6cfaffe578a01221261ac1d5d99c48d44f6377ff0de3a12dd332cec/fancycompleter-0.8.tar.gz",
                     "sha256": "d2522f1f3512371f295379c4c0d1962de06762eb586c199620a2a5d423539b12"
+                }
+            ]
+        },
+
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2",
+                    "sha256": "7bcc5caace97baa948931d712ea5f37038dbb1c5d89b43ad4def4ed7cb683332"
+                }
+            ],
+            "build-commands": [
+                "./bootstrap.sh",
+                "./b2 headers",
+                "cp -r boost /app/include/boost"
+            ],
+            "cleanup": [
+                "*"
+            ]
+        },
+
+        {
+            "name": "swig",
+            "cleanup": [
+                "*"
+            ],
+            "build-options": {
+                "build-args": [
+                    "--share=network",
+                    "--allow=devel",
+                    "--filesystem=home:rw"
+                ],
+                "env": {
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
+                }
+            },
+            "config-opts": [
+                "--without-boost",
+                "--without-pcre",
+                "--with-python=python3"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/swig/swig-3.0.12.tar.gz",
+                    "sha256": "7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d"
+                }
+            ]
+        },
+
+        {
+            "name": "sphinxbase",
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
+            "build-options": {
+                "env": {
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
+                }
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "branch": "74370799d5b53afc5b5b94a22f5eff9cb9907b97",
+                    "url": "https://github.com/cmusphinx/sphinxbase.git"
+                }
+            ]
+        },
+
+        {
+            "name": "pocketsphinx",
+            "ensure-writable": [
+                "easy-install.pth"
+            ],
+            "build-options": {
+                "env": {
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app"
+                }
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "branch": "68ef5dc6d48d791a747026cd43cc6940a9e19f69",
+                    "url": "https://github.com/cmusphinx/pocketsphinx.git"
                 }
             ]
         },
