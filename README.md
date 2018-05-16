@@ -70,3 +70,7 @@ xdg-desktop-portal
 ```
 /home/developer/.pyenv/versions/3.6.5/bin/python3.6: /lib/libc.so.6: version `GLIBC_2.25' not found (required by /home/developer/.pyenv/versions/3.6.5/bin/python3.6)
 ```
+
+# gnome-builder flatpak build logic
+
+https://github.com/GNOME/gnome-builder/blob/d866396eaa2f192a1c42856d0a102ceec454deb0/src/plugins/flatpak/gbp-flatpak-pipeline-addin.c

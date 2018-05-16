@@ -1,0 +1,51 @@
+# A list of source repositories with example applications
+
+This page is an unfiltered list, containing experimental builds. If you want to try installing Flatpaks, the [apps page on flatpak.org](http://flatpak.org/apps.html) is a better resource.
+
+## Runtimes and SDKs
+
+- [Freedesktop.org yocto base](https://github.com/flatpak/freedesktop-sdk-base)
+- [Freedesktop.org](https://github.com/flatpak/freedesktop-sdk-images)
+- [KDE](https://github.com/KDE/flatpak-kde-runtime)
+- [CentOS](https://github.com/matthiasclasen/flatpak-runtime/)
+- [OpenSUSE](https://github.com/fcrozat/opensuse-flatpak-runtime)
+- [GNOME](https://git.gnome.org/browse/gnome-sdk-images)
+- [Liri](https://github.com/lirios/flatpak-runtime)
+
+## Applications
+
+- [KDE](https://github.com/KDE/flatpak-kde-applications)
+- [GNOME](https://git.gnome.org/browse/gnome-apps-nightly/)
+- [Liri](https://github.com/lirios/flatpak-apps)
+- [Firefox](https://github.com/vrutkovs/firefox-flatpak)
+- [Thunderbird](https://github.com/mariospr/thunderbird-flatpak)
+- [LibreOffice](https://gerrit.libreoffice.org/gitweb?p=dev-tools.git;a=tree;f=flatpak)
+- [MonoDevelop](https://github.com/directhex/monodevelop-flatpak)
+- [Spotify](https://github.com/alexlarsson/spotify-app/)
+- [Blender](https://git.framasoft.org/bochecha/blender-flatpak)
+- [Electron](https://github.com/vrutkovs/flatpak-electron)
+- [Pitivi](https://phabricator.freedesktop.org/diffusion/PTV/browse/master/build/flatpak/pitivi.template.json)
+- [GStreamer codec, RetroArch, MPV](https://github.com/hadess/flatpak-fusion)
+- [Pithos, GnomeMpv, HexChat, Transmission-Remote-Gtk, Gnome-Twitch](https://github.com/TingPing/flatpak-packages)
+- [Commercial games](https://github.com/hadess/flatpak-games)
+- [Gimp, MyPaint, Scribus, Darktable](https://github.com/alexlarsson/nightly-build-apps)
+- [Minecraft](https://github.com/Kekun/flatpak-minecraft)
+- [VLC (VideoLan)](https://github.com/kinvolk/vlc-flatpak/)
+- [Minetest](https://github.com/est31/minetest-flatpak)
+- [Telegram Desktop Client](https://github.com/grulja/nightly-build-apps/blob/master/org.telegram.TelegramDesktopDevel.json)
+- [Skype, Skypeforlinux](https://github.com/alexlarsson/skype-app)
+- [CubicSDR](https://github.com/cjcliffe/CubicSDR-flatpak)
+- [Lollypop](https://github.com/gnumdk/lollypop/tree/master/flatpak) (music player)
+- [WebStorm](https://github.com/yogurt1/webstorm-flatpak)
+- [Tomahawk](https://www.tomahawk-player.org/) (music player)
+- [SparkleShare](https://github.com/hbons/org.sparkleshare.SparkleShare)
+- [Corebird](https://github.com/baedert/corebird-flatpak)
+- [Feedreader](https://github.com/jscurtu/feedreader-flatpak)
+- [Slack](https://github.com/mattdangerw/flatpak-slack-app)
+- [Abiword](https://github.com/AbiWord/abiword-flatpak)
+- [Android Studio](https://github.com/endlessm/android-studio-flatpak)
+- [Arduino IDE](https://github.com/endlessm/arduino-ide-flatpak)
+- [Claws Mail](https://github.com/nhlfr/claws-mail-flatpak)
+- [Codeblocks](https://github.com/endlessm/codeblocks-flatpak)
+- [PPSSPP](https://github.com/Barthalion/flatpak-ppsspp)
+- [Endless Sky](https://github.com/Barthalion/flatpak-endless-sky)
