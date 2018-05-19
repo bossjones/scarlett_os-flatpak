@@ -419,20 +419,149 @@
             ]
         },
 
+        {
+          "name": "portaudio",
+          "_comment": "https://github.com/flathub/net.ankiweb.Anki/blob/b62bc0fea594df26fafd112d7d809cdb8782fa91/net.ankiweb.Anki.json",
+          "sources": [
+              {
+                  "type": "archive",
+                  "url": "http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz",
+                  "sha256": "f5a21d7dcd6ee84397446fa1fa1a0675bb2e8a4a6dceb4305a8404698d8d1513"
+              }
+          ]
+        },
 
+        {
+          "name": "pcaudiolib",
+          "sources": [
+              {
+                  "type": "git",
+                  "branch": "d6a6b00aa4334b461c1a09c27b6c681eaac8da8a",
+                  "url": "https://github.com/rhdunn/pcaudiolib.git"
+              }
+          ]
+        },
+
+        {
+            "name": "pulseaudio",
+            "config-opts": [
+                "--disable-static",
+                "--disable-rpath",
+                "--with-system-user=pulse",
+                "--with-system-group=pulse",
+                "--with-access-group=pulse-access",
+                "--disable-oss-output",
+                "--disable-jack",
+                "--disable-lirc",
+                "--disable-bluez4",
+                "--disable-bluez5",
+                "--disable-systemd"
+            ],
+            "_cleanup": [
+                "/share/pulseaudio",
+                "/bin/pulseaudio",
+                "/bin/start-pulseaudio-x11",
+                "/bin/pasuspender",
+                "/lib/pulse-*/modules",
+                "/etc/dbus-1/system.d",
+                "/etc/pulse/daemon.conf",
+                "/etc/pulse/*.pa"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-10.0.tar.xz",
+                    "sha256": "a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57"
+                }
+            ]
+        },
+
+        {
+            "name": "alsa-lib",
+            "config-opts": [
+                "--disable-aload",
+                "--disable-alisp",
+                "--disable-old-symbols",
+                "--with-pcm-plugins=hw ioplug extplug"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://people.freedesktop.org/~alexl/alsa-lib-1.1.4.1.tar.bz2",
+                    "sha256": "91bb870c14d1c7c269213285eeed874fa3d28112077db061a3af8010d0885b76"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "autoreconf -i"
+                    ]
+                },
+                {
+                    "type": "patch",
+                    "path": "alsa-lib-plugin-path.patch"
+                }
+            ]
+        },
+        {
+            "name": "alsa-plugins",
+            "config-opts": [
+                "--disable-jack",
+                "--enable-pulseaudio",
+                "--disable-samplerate",
+                "--disable-avcodec",
+                "--with-speex=no"
+            ],
+            "post-install": [
+                "mv /app/share/alsa/alsa.conf.d/99-pulseaudio-default.conf.example /app/share/alsa/alsa.conf.d/99-pulseaudio-default.conf"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://people.freedesktop.org/~alexl/alsa-plugins-1.1.4.tar.bz2",
+                    "sha256": "530d1c3bdaeb058f2a03607a33b9e16ee5369bfd30a96bc09bd2c69b4ddd1a8a"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "autoreconf -i"
+                    ]
+                }
+            ]
+        },
 
         {
             "name": "espeak",
-            "disabled": true,
+            "buildsystem": "simple",
+            "build-commands": [
+                "./autogen.sh --prefix=/app",
+                "cat ./configure",
+                "sleep 10",
+                "./configure --prefix=/app",
+                "make",
+                "make install"
+            ],
+            "make-args": [
+                "LIBDIR=/app/lib",
+                "ESPEAK_DATA_PATH=/app/usr/share/espeak-ng-data"
+            ],
+            "make-install-args": [
+                "LIBDIR=/app/lib",
+                "ESPEAK_DATA_PATH=/app/usr/share/espeak-ng-data"
+            ],
             "build-options": {
                 /* This is an array containing extra options to pass to flatpak build. */
                 "build-args": [
                     "--share=network",
-                    "--allow=devel",
-                    "--filesystem=home:rw"
+                    "--allow=devel"
                 ],
-                /* This is set in the environment variable CFLAGS during the build. Multiple specifications of this (in e.g. per-arch area) are concatenated, separated by spaces. */
-                "_cflags": "-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64",
+                "env": {
+                    "PYTHON": "/app/bin/python3",
+                    "PYTHONUSERBASE": "/app",
+                    "ESPEAK_DATA_PATH": "/app/usr/share/espeak-ng-data",
+                    "LIBDIR": "/app/lib"
+                },
                 /* If this is true (the default is false) then all ELF files will be stripped after install. */
                 "strip": false,
                 /* By default (if strip is not true) flatpak-builder extracts all debug info in ELF files to a separate files and puts this in an extension. If you want to disable this, set no-debuginfo to true. */
@@ -442,7 +571,7 @@
                 {
                     "type": "git",
                     "branch": "1.49.2",
-                    "url": "github.com/rhdunn/espeak.git"
+                    "url": "https://github.com/rhdunn/espeak.git"
                 }
             ]
         },
