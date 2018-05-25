@@ -578,22 +578,35 @@
 
         {
             "name": "gst-plugins-espeak",
-            "disabled": true,
-            "config-opts": [
-                "--enable-compile-warnings=minimum",
-                "--enable-doc-installation=no"
+            "buildsystem": "simple",
+            "build-commands": [
+                "./configure --prefix=/app",
+                "cat ./configure",
+                "sleep 10",
+                "make",
+                "make install"
+            ],
+            "ensure-writable": [
+                "easy-install.pth"
             ],
             "build-options": {
                 "env": {
                     "PYTHON": "/app/bin/python3",
-                    "PYTHONUSERBASE": "/app"
-                }
+                    "PYTHONUSERBASE": "/app",
+                    "GST_MAJORMINOR": "1.0",
+                    "ESPEAK_PREFIX": "/app"
+                },
+                "cxxflags": "-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -g -O2 -fstack-protector-strong -Wformat -Werror=format-security"
             },
             "sources": [
                 {
                     "type": "archive",
                     "sha256": "f87c6c92338130a9e6a763d217a8e0d666206ec7b277fbe9fecb774db1b0d908",
                     "url": "https://github.com/bossjones/bossjones-gst-plugins-espeak-0-4-0/archive/v0.4.1.tar.gz"
+                },
+                {
+                    "type": "patch",
+                    "path": "bossjones-gst-plugins-espeak.patch"
                 }
             ]
         },
