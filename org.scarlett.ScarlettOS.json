@@ -903,8 +903,9 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://github.com/bossjones/scarlett_os.git",
-                    "branch": "master"
+                    "branch": "feature-hacking-environment",
+                    "disable-shallow-clone": true,
+                    "url": "https://github.com/bossjones/scarlett_os.git"
                 },
                 {
                     "type": "patch",
@@ -1028,22 +1029,6 @@
             "build-commands": [
                 "luarocks build lpeg 1.0.1-1",
                 "luarocks build mpack 1.0.6-0"
-            ]
-        },
-        {
-            "name": "neovim",
-            "disabled": true,
-            "buildsystem": "simple",
-            "build-commands": [
-                "make BUILD_TYPE=\"Unix Makefiles\" CMAKE_BUILD_TYPE=Release USE_BUNDLED_DEPS=OFF CMAKE_EXTRA_FLAGS=\"-DCMAKE_INSTALL_PREFIX=/app -DFEAT_TUI=OFF\" ",
-                "make BUILD_TYPE=\"Unix Makefiles\" CMAKE_BUILD_TYPE=Release USE_BUNDLED_DEPS=OFF CMAKE_EXTRA_FLAGS=\"-DCMAKE_INSTALL_PREFIX=/app -DFEAT_TUI=OFF\" install"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/neovim/neovim",
-                    "tag": "v0.2.2"
-                }
             ]
         },
         {
